@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Creator Scout — Scaling Webinars</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--b0:#08080d;--b1:#0e0e16;--b2:#14141e;--b3:#1a1a28;--b4:#222234;--bd:rgba(255,255,255,.06);--bdh:rgba(255,255,255,.12);--t1:#f2f2fa;--t2:#9494b0;--t3:#5c5c78;--ac:#00e5a0;--acd:rgba(0,229,160,.12);--ac2:#00b4d8;--pu:#a78bfa;--or:#f4a261;--yl:#e9c46a}
+*{margin:0;padding:0;box-sizing:border-box}body{background:var(--b0);color:var(--t1);font-family:Outfit,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;top:-300px;right:-200px;width:800px;height:800px;background:radial-gradient(circle,rgba(0,229,160,.04),transparent 70%);pointer-events:none}
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;border-bottom:1px solid var(--bd);backdrop-filter:blur(20px);position:sticky;top:0;z-index:100;background:rgba(8,8,13,.92)}
+.logo{display:flex;align-items:center;gap:10px}.logo i{width:32px;height:32px;background:linear-gradient(135deg,#00e5a0,#00b4d8);border-radius:8px;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:14px;font-weight:800;color:#08080d}.logo span{font-family:'Instrument Serif',serif;font-size:21px}.logo b{background:linear-gradient(135deg,#00e5a0,#00b4d8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+#nav{display:flex;gap:2px;background:var(--b1);border-radius:10px;padding:3px;border:1px solid var(--bd)}
+#nav button{padding:8px 16px;border:none;background:0;color:var(--t2);font-family:Outfit,sans-serif;font-size:12px;font-weight:500;cursor:pointer;border-radius:7px;transition:.2s;white-space:nowrap}
+#nav button:hover{color:var(--t1);background:rgba(255,255,255,.04)}#nav button.on{color:#08080d;background:var(--ac);font-weight:600}
+#app{padding:24px;max-width:1480px;margin:0 auto;position:relative;z-index:1}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.cd{background:var(--b2);border:1px solid var(--bd);border-radius:12px;padding:20px;transition:.2s}.cd:hover{border-color:var(--bdh)}
+.st-c{text-align:center;padding:16px}.st-n{font-family:'Instrument Serif',serif;font-size:28px;background:linear-gradient(135deg,#00e5a0,#00b4d8);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.st-l{font-size:10px;color:var(--t2);margin-top:3px;text-transform:uppercase;letter-spacing:1px}
+.tag{font-size:10px;padding:3px 9px;background:rgba(255,255,255,.04);border:1px solid var(--bd);border-radius:16px;color:var(--t2);display:inline-block;margin:2px}.tg{border-color:rgba(0,229,160,.2);color:var(--ac);background:var(--acd)}
+.btn{padding:9px 18px;border:none;border-radius:8px;font-family:Outfit,sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:.2s}.bp{background:var(--ac);color:#08080d}.bp:hover{opacity:.9}.bs{background:rgba(255,255,255,.06);color:var(--t1);border:1px solid var(--bd)}.bs:hover{border-color:var(--bdh)}
+.hbt{height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;margin-top:10px}.hb{height:100%;border-radius:3px;transition:width 1s}
+a.art{display:block;padding:10px 14px;background:rgba(0,180,216,.06);border:1px solid rgba(0,180,216,.12);border-radius:8px;margin:5px 0;color:var(--ac2);text-decoration:none;font-size:12px;line-height:1.4;transition:.2s}a.art:hover{background:rgba(0,180,216,.12)}a.art strong{color:var(--t1);font-size:12px;display:block;margin-bottom:2px}a.art em{font-style:normal;color:var(--t3);font-size:10px}
+.fitc{background:var(--b2);border:1px solid var(--bd);border-radius:8px;padding:14px;margin-bottom:8px}.fitc h4{font-size:12px;font-weight:700;color:var(--ac);margin-bottom:4px}.fitc p{font-size:12px;color:var(--t2);line-height:1.5}
+/* PIPELINE DRAG */
+.pb{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;min-height:500px}
+.pcol{min-width:240px;flex:1;display:flex;flex-direction:column}
+.pcol-h{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--b2);border:1px solid var(--bd);border-radius:8px 8px 0 0;position:sticky;top:0}
+.pcol-h b{font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+.pcnt{font-size:10px;padding:2px 7px;border-radius:10px;background:rgba(255,255,255,.06);color:var(--t2)}
+.pdrop{flex:1;min-height:60px;background:var(--b1);border:1px solid var(--bd);border-top:0;border-radius:0 0 8px 8px;padding:6px;transition:.2s}
+.pdrop.over{background:rgba(0,229,160,.05);border-color:rgba(0,229,160,.2)}
+.pcard{padding:12px;background:var(--b2);border:1px solid var(--bd);border-radius:8px;margin-bottom:6px;cursor:grab;transition:.2s;user-select:none}
+.pcard:hover{border-color:var(--bdh);background:var(--b3)}
+.pcard.dragging{opacity:.4;transform:scale(.95)}
+.pcard b{font-size:12px;display:block;margin-bottom:2px}.pcard small{font-size:10px;color:var(--t2)}
+.sta{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:6px;font-size:10px;font-weight:600;border:none;font-family:Outfit,sans-serif}
+/* OUTREACH */
+.op{display:grid;grid-template-columns:280px 1fr;gap:16px;min-height:480px}
+.cl{display:flex;flex-direction:column;gap:4px;max-height:540px;overflow-y:auto;padding-right:6px}.cl::-webkit-scrollbar{width:3px}.cl::-webkit-scrollbar-thumb{background:var(--bdh);border-radius:3px}
+.ci{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;transition:.2s;border:1px solid transparent}.ci:hover{background:rgba(255,255,255,.03)}.ci.sel{background:var(--acd);border-color:rgba(0,229,160,.2)}
+.av{width:34px;height:34px;border-radius:8px;background:var(--b4);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--ac);flex-shrink:0}
+.ang{background:var(--b1);border:1px solid var(--bd);border-radius:8px;padding:16px;margin-bottom:10px}.ang:hover{border-color:var(--bdh)}
+.ahk{font-size:13px;font-weight:600;padding:10px 14px;background:rgba(0,229,160,.06);border:1px solid rgba(0,229,160,.15);border-radius:8px;margin-bottom:10px;line-height:1.5}
+.abdy{font-size:12.5px;line-height:1.7;color:var(--t2);white-space:pre-wrap}
+.sc-c{position:relative;overflow:hidden}.sc-c::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(135deg,#a78bfa,#f472b6)}
+.sc-ring{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;position:relative;flex-shrink:0}.sc-ring::before{content:'';position:absolute;inset:0;border-radius:50%;padding:2px;background:linear-gradient(135deg,#00e5a0,#00b4d8);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.mbg{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}
+.mdl{background:var(--b1);border:1px solid var(--bd);border-radius:16px;max-width:780px;width:100%;max-height:85vh;overflow-y:auto;padding:28px}.mdl::-webkit-scrollbar{width:4px}.mdl::-webkit-scrollbar-thumb{background:var(--bdh);border-radius:3px}
+.mx{float:right;background:0;border:0;color:var(--t2);font-size:18px;cursor:pointer;padding:4px 8px;border-radius:6px}.mx:hover{color:var(--t1);background:rgba(255,255,255,.06)}
+/* FORM */
+.frm{background:var(--b2);border:1px solid var(--bd);border-radius:12px;padding:20px;margin-bottom:20px}
+.frm input,.frm select,.frm textarea{width:100%;padding:10px 12px;background:var(--b1);border:1px solid var(--bd);border-radius:8px;color:var(--t1);font-family:Outfit,sans-serif;font-size:13px;margin-bottom:10px;outline:none;transition:.2s}
+.frm input:focus,.frm select:focus,.frm textarea:focus{border-color:var(--ac)}
+.frm select{appearance:none;-webkit-appearance:none}
+.frm label{font-size:11px;color:var(--t2);display:block;margin-bottom:4px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.frm-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ni-btn{background:var(--b2);border:1px solid var(--bd);border-radius:8px;padding:10px 14px;cursor:pointer;transition:.2s;text-align:left;width:100%;font-family:Outfit,sans-serif;color:var(--t1);display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.ni-btn:hover{border-color:var(--bdh);background:var(--b3)}.ni-btn.sel{border-color:rgba(0,229,160,.3);background:var(--acd)}
+.search-box{width:100%;padding:10px 14px;background:var(--b1);border:1px solid var(--bd);border-radius:8px;color:var(--t1);font-family:Outfit,sans-serif;font-size:13px;margin-bottom:14px;outline:none}.search-box:focus{border-color:var(--ac)}
+.page-nav{display:flex;gap:6px;justify-content:center;margin-top:16px}.page-nav button{padding:6px 14px;border:1px solid var(--bd);background:var(--b2);color:var(--t2);border-radius:6px;font-family:Outfit,sans-serif;font-size:12px;cursor:pointer}.page-nav button.on{background:var(--ac);color:#08080d;border-color:var(--ac)}
+@media(max-width:1200px){.g4{grid-template-columns:repeat(2,1fr)}.op{grid-template-columns:240px 1fr}}
+@media(max-width:768px){.hdr{flex-direction:column;gap:10px;padding:12px}#nav{overflow-x:auto;width:100%}#app{padding:14px}.g2,.g3,.g4{grid-template-columns:1fr}.op{grid-template-columns:1fr}.pb{flex-direction:column}}
+/* AI CHAT BUBBLE */
+#ai-fab{position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#00e5a0,#00b4d8);border:none;cursor:pointer;z-index:300;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 20px rgba(0,229,160,.3);transition:.2s}
+#ai-fab:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(0,229,160,.4)}
+#ai-fab.open{border-radius:12px;width:48px;height:48px;font-size:20px}
+#ai-chat{position:fixed;bottom:90px;right:24px;width:400px;max-height:520px;background:var(--b1);border:1px solid var(--bdh);border-radius:16px;z-index:300;display:none;flex-direction:column;overflow:hidden;box-shadow:0 12px 48px rgba(0,0,0,.6)}
+#ai-chat.open{display:flex}
+#ai-chat-head{padding:14px 16px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;background:var(--b2)}
+#ai-chat-head h3{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+#ai-chat-head h3 span{width:8px;height:8px;border-radius:50%;background:var(--ac);display:inline-block}
+#ai-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;max-height:360px}
+#ai-msgs::-webkit-scrollbar{width:3px}#ai-msgs::-webkit-scrollbar-thumb{background:var(--bdh);border-radius:3px}
+.ai-msg{max-width:88%;padding:10px 14px;border-radius:12px;font-size:12.5px;line-height:1.6;word-wrap:break-word}
+.ai-msg.usr{align-self:flex-end;background:rgba(0,229,160,.15);color:var(--t1);border-bottom-right-radius:4px}
+.ai-msg.bot{align-self:flex-start;background:var(--b3);color:var(--t2);border-bottom-left-radius:4px}
+.ai-msg.bot b,.ai-msg.bot strong{color:var(--t1)}
+.ai-typing{align-self:flex-start;padding:10px 14px;background:var(--b3);border-radius:12px;border-bottom-left-radius:4px;font-size:12px;color:var(--t3)}
+.ai-typing span{animation:blink 1.4s infinite;display:inline-block}
+.ai-typing span:nth-child(2){animation-delay:.2s}.ai-typing span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,100%{opacity:.3}50%{opacity:1}}
+#ai-input-wrap{padding:10px 14px;border-top:1px solid var(--bd);display:flex;gap:8px;align-items:center;background:var(--b2)}
+#ai-input{flex:1;padding:10px 12px;background:var(--b1);border:1px solid var(--bd);border-radius:8px;color:var(--t1);font-family:Outfit,sans-serif;font-size:13px;outline:none;resize:none;max-height:80px}
+#ai-input:focus{border-color:var(--ac)}
+#ai-send{width:36px;height:36px;border-radius:8px;background:var(--ac);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:#08080d;flex-shrink:0;transition:.2s}
+#ai-send:hover{opacity:.85}
+#ai-ctx{padding:6px 14px;background:rgba(0,229,160,.05);border-bottom:1px solid var(--bd);font-size:10px;color:var(--ac);display:none}
+@media(max-width:500px){#ai-chat{width:calc(100vw - 20px);right:10px;bottom:80px}}
+</style>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+<body>
+<header class="hdr"><div class="logo"><i>CS</i><span>Creator<b>Scout</b></span></div><nav id="nav"></nav></header>
+<main id="app"></main><div id="mr"></div>
+<script>
+// ═══════ FIREBASE + LOCAL STORAGE DUAL SYNC ═══════
+var db=null;
+try{
+firebase.initializeApp({
+apiKey:"AIzaSyAV2CXpeZNtNpALRXSpBYf2nIhxuxHUFYM",
+authDomain:"creatorr-scout.firebaseapp.com",
+databaseURL:"https://creatorr-scout-default-rtdb.firebaseio.com",
+projectId:"creatorr-scout",
+storageBucket:"creatorr-scout.firebasestorage.app",
+messagingSenderId:"101946897958",
+appId:"1:101946897958:web:fac2a7f006fc94b3d9d8e7"
+});
+db=firebase.database();
+}catch(e){console.log("Firebase not available, using local storage only")}
+
+// Local storage fallbacks
+function saveCreatorsLocal(){try{localStorage.setItem("cs_creators",JSON.stringify(C));localStorage.setItem("cs_nextId",String(nextId))}catch(e){}}
+function loadCreatorsLocal(){try{var d=localStorage.getItem("cs_creators");if(d){C=JSON.parse(d);nextId=parseInt(localStorage.getItem("cs_nextId"))||16}}catch(e){}}
+function saveMsgsLocal(){try{localStorage.setItem("cs_msgLog",JSON.stringify(window._msgLog))}catch(e){}}
+function loadMsgsLocal(){try{var d=localStorage.getItem("cs_msgLog");if(d)window._msgLog=JSON.parse(d)}catch(e){}}
+
+// Unified save — when Firebase is connected, ONLY write to Firebase (listeners handle local update)
+// When Firebase is not connected, write to localStorage as fallback
+var fbConnected=false;
+function saveCreators(){
+if(fbConnected){
+try{var obj={};C.forEach(function(c){obj[c.id]=c});db.ref("creators").set(obj);db.ref("meta/nextId").set(nextId)}catch(e){saveCreatorsLocal()}
+}else{saveCreatorsLocal()}
+}
+function saveMsgs(){
+if(fbConnected){
+try{db.ref("messages").set(window._msgLog)}catch(e){saveMsgsLocal()}
+}else{saveMsgsLocal()}
+}
+// ═══════ NICHES (expanded to 12) ═══════
+var N=[
+{name:"AI & Automation",heat:98,growth:"+64%",rev:"$2.8B",proj:"$12.4B",kw:["AI agents","prompt engineering","no-code automation","ChatGPT"],gt:"AI+course,prompt+engineering,AI+automation+business",gts:"AI%20course,prompt%20engineering,AI%20automation",ins:"AI spending $2.52T by 2026. 84% of creators use AI. Agentic AI market hit $10.86B March 2026. 40% rise in AI job openings.",fut:"By 2028, 33% of enterprise software includes agentic AI. AI-in-education $20B by 2027. Industry-specific courses at $2K-5K.",fits:{mp:"Massive demand. $2.52T AI spending. 43% of six-figure creators use AI for production. 40% increase in AI job roles creating urgent training need.",pc:"AI tutorials go viral on IG Reels and YouTube. YT AI channels command $15-25 RPM. TikTok AI content billions of views. Paid ads convert 2-3x vs other niches.",cm:"Webinar-to-HT works. AI courses $497-$1,997. Automation blueprints $297-$997. Prompt libraries $27-$97. Facebook/YouTube ads profitable at $50-150 CPA.",mp2:"Tools launch weekly = endless content. Job displacement fear creates urgency. Immediate ROI from skills. $997-$2,997 justified by career/business gains."},arts:[{t:"Agentic AI Market Hits $10.86B — March 2026",u:"https://bostoninstituteofanalytics.org/blog/agentic-ai-weekly-report-14th-20th-march-2026-key-statistics-market-growth-industry-trends/",s:"Boston Institute"},{t:"E-Learning Exceeds $365B: AI Redefining Learning",u:"https://www.didask.com/en/post/marche-e-learning",s:"Didask Research"},{t:"AI & Automation Trends 2026",u:"https://www.redwood.com/article/ai-automation-trends/",s:"Redwood / Forbes"},{t:"AI Learning Path Market $16.4B by 2030",u:"https://www.researchandmarkets.com/reports/6225935/ai-powered-personalized-learning-path-market",s:"Research & Markets"}]},
+{name:"Health & Wellness",heat:95,growth:"+38%",rev:"$6.8T",proj:"$9.8T",kw:["gut health","metabolic health","longevity","biohacking"],gt:"gut+health,metabolic+health,longevity+supplements,biohacking",gts:"gut%20health,metabolic%20health,biohacking",ins:"Wellness economy $6.8T in 2024. Growing to $10.36T by 2030 at 8.7% CAGR. Neurowellness is next frontier. Digital fitness platforms surging.",fut:"Precision medicine $141.7B. Wellness real estate fastest-growing sector. Women's healthspan = new paradigm. Wearables + AI personalized health by 2028.",fits:{mp:"$6.8T market confirmed (GWI). 74.7% prioritizing health. 35.5M US adults with CKD alone drives wellness demand. Supplements and functional foods booming.",pc:"Health content high engagement on IG/YT. Testimonial-driven FB ads convert well. YouTube long-form builds trust for HT. Reels demos get massive reach.",cm:"Webinar funnels 6-9% conversion. $997-$4,997 justified by transformation. Subscriptions $37-$99/mo. HT coaching $2,997-$5,997 for practitioners.",mp2:"Measurable outcomes = strong testimonials. Specific conditions command premium. Add-on products (supplements) = extra revenue. High LTV."},arts:[{t:"Health & Wellness Market $10.36T by 2030",u:"https://finance.yahoo.com/news/health-wellness-industry-report-2026-090700280.html",s:"Yahoo Finance"},{t:"10 Wellness Trends for 2026",u:"https://globalwellnessinstitute.org/press-room/press-releases/global-wellness-summit-releases-10-wellness-trends-for-2026/",s:"Global Wellness Institute"},{t:"Wellness Industry 2026 Transformations",u:"https://www.globenewswire.com/news-release/2026/02/04/3232214/0/en/Health-Wellness-Industry-in-2026-Key-Trends-and-Transformations.html",s:"GlobeNewsWire"},{t:"Future of Wellness 2026",u:"https://www.globalwellnesssummit.com/2026trends/",s:"Global Wellness Summit"}]},
+{name:"Mental Health",heat:93,growth:"+42%",rev:"$2.3B",proj:"$5.1B",kw:["somatic healing","attachment theory","ADHD coaching","nervous system"],gt:"somatic+healing,attachment+theory,nervous+system+regulation,ADHD+coaching",gts:"somatic%20healing,attachment%20theory,ADHD%20coaching",ins:"Wellness tourism $1.1T, 48% mental health driven. Digital mental health services +200% post-pandemic. Neurowellness = next frontier.",fut:"AI wellness companions by 2028. Clinical credentials + audience = unicorn. Cohort-based 85% completion vs 10% self-paced. $3K-7K cert programs.",fits:{mp:"Historic demand. 200% increase digital mental health (APA). Nervous system and attachment content trending massively. Universal need.",pc:"Viral on Instagram. Saves/shares highest-value signals. @theholisticpsychologist proved model. Emotional content = algorithm boost.",cm:"Therapy-adjacent courses $497-$2,997. Certifications $3K-7K. Community $47-$97/mo. Low refund rates. Emotional investment = retention.",mp2:"Measurable life improvement. Strong word-of-mouth. Repeat purchases. Professional development for therapists = B2B angle."},arts:[{t:"Creator Economy: Mental Health Advocates",u:"https://www.mentalhealthparitypartners.com/2026/02/25/the-future-of-creato/",s:"Mental Health Parity Partners"},{t:"Rise of Neurowellness — GWS 2026",u:"https://www.globalwellnesssummit.com/2026trends/",s:"Global Wellness Summit"},{t:"Creator Economy 120+ Data Points 2026",u:"https://www.financialcontent.com/article/accwirecq-2026-3-17-creator-economy-statistics-2026-120-data-points-every-marketer-should-know",s:"SharkPlatform"}]},
+{name:"Trading & Investing",heat:89,gt:"day+trading+course,options+trading,crypto+trading+course",gts:"day%20trading,options%20trading,crypto%20trading",growth:"+27%",rev:"$3.1B",proj:"$5.8B",kw:["day trading","options","crypto","algorithmic trading"],ins:"Fintech $644.6B by 2029 at 25.18% CAGR. TikTok #personalfinance 5B+ views. 82% of Americans want finance education.",fut:"AI-powered trading education by 2028. Hybrid models with live AI signals. Algorithmic trading for retail = next category.",fits:{mp:"Fintech 25.18% CAGR. 82% want more financial education. Trading audiences 22-40 with disposable income.",pc:"YouTube $12-20 RPM. Live trading = massive engagement. TikTok finance creators built millions of followers. FB/YT ads work well.",cm:"Courses $997-$4,997. Subscriptions with signals $97-$297/mo. Webinar converts well. Backend coaching $5K+.",mp2:"Clear ROI proposition. High urgency. Premium for proven strategies. Signals/rooms = strong recurring."},arts:[{t:"Trending Niches for Creators 2026",u:"https://www.teleprompter.com/blog/trending-niches-for-creators-right-now",s:"Teleprompter.com"},{t:"18 Profitable Niches 2026",u:"https://www.gelato.com/blog/profitable-niches",s:"Gelato"},{t:"Emerging Business Niches 2026",u:"https://prometai.app/blog/emerging-niches-business-planning",s:"Promet AI"}]},
+{name:"Fitness & Movement",heat:87,gt:"functional+fitness,mobility+training,body+recomp",gts:"functional%20fitness,mobility%20training,body%20recomp",growth:"+22%",rev:"$3.8B",proj:"$6.2B",kw:["functional training","mobility","recovery science","body recomp"],ins:"74.7% prioritizing health. Recovery and functional movement overtaking bodybuilding. Wearable fitness +9.6% YoY. NA 47% of tracker market.",fut:"VR fitness $50B by 2027. Trainer certifications = highest-ticket play by 2028. Wearable-integrated programs = premium.",fits:{mp:"74.7% spending on health. Wearable market growing 9.6%. Recovery/mobility fastest sub-niches. Performance/longevity replacing aesthetics.",pc:"Fitness dominates IG/YT. Exercise demos get massive reach on Reels. YouTube channels monetize through ads + courses.",cm:"Subscriptions $29-$99/mo proven (Peloton, KOT). Programs $97-$497. Certifications $2,997-$5,997. Challenge models drive urgency.",mp2:"Visual transformations = testimonials. Community drives retention. Measurable outcomes. Certification = B2B revenue."},arts:[{t:"Digital Fitness Growth 2026",u:"https://www.globenewswire.com/news-release/2026/02/04/3232214/0/en/Health-Wellness-Industry-in-2026-Key-Trends-and-Transformations.html",s:"GlobeNewsWire"},{t:"5 Best Course Niches 2026",u:"https://passion.io/blog/5-best-course-niches-to-make-money-online-2026",s:"Passion.io"},{t:"Profitable Course Niches",u:"https://www.mightynetworks.com/resources/profitable-online-course-niches",s:"Mighty Networks"}]},
+{name:"Online Business",heat:85,gt:"online+coaching+business,course+creation,skool+community",gts:"online%20coaching,course%20creation,skool",growth:"+19%",rev:"$5.6B",proj:"$9.2B",kw:["agency building","coaching","course creation","Skool"],ins:"Creator economy $214B in 2026, $480B by 2027. 28% self-employed. 18% crossing $100K. 207M+ creators. 46% of learners choose business.",fut:"Creator-led businesses default by 2028. AI cuts production 70%. Tool consolidation coming. Creator marketing infra = competitive advantage.",fits:{mp:"46% choose business topics (largest segment). Creator economy $214B, doubling. 207M+ creators undermonetized. Entrepreneurs invest most in education.",pc:"Works across all platforms. IG tips, YT deep dives, podcasts for authority. LinkedIn emerging for B2B. Decades of proven paid ad data.",cm:"$300-$2,000+ comprehensive programs. Subscriptions $49-$299/mo. Masterminds $5K-$25K. Upsell to consulting = massive LTV. Webinar gold standard.",mp2:"Clear ROI. B2B means businesses pay premium. Course + coaching + community stack. Strong repeat purchase."},arts:[{t:"Creator Economy $480B by 2027",u:"https://www.goldmansachs.com/insights/articles/the-creator-economy-could-approach-half-a-trillion-dollars-by-2027",s:"Goldman Sachs"},{t:"Creator Economy Stats 2026",u:"https://www.demandsage.com/creator-economy-statistics/",s:"DemandSage"},{t:"Creator Economy Growth 2026",u:"https://yournews.com/2026/03/03/6584443/creator-economy-growth-and-performance-ecosystems-for-brands/",s:"YourNews"}]},
+{name:"Personal Finance",heat:83,gt:"budgeting+app,financial+literacy,FIRE+movement",gts:"budgeting,financial%20literacy,FIRE%20movement",growth:"+25%",rev:"$2.9B",proj:"$5.4B",kw:["budgeting","FIRE","debt payoff","side hustles"],ins:"82% of Americans want finance class. TikTok finance 5B+ views. Finance creators $9,100/mo median. High-value affiliate programs (30% recurring).",fut:"Embedded fintech in course platforms by 2029. Subscription coaching with AI-driven plans. Finance creators launching own fintech products.",fits:{mp:"82% want education. 45% have <$1K savings. Financial literacy gap enormous. Evergreen demand regardless of economy.",pc:"Crushes on TikTok (5B+ views) and YouTube ($12-20 RPM). IG finance at 3.4M+ (Humphrey Yang). Podcast monetization strong.",cm:"Tripwires $27-$97. Mid-ticket $297-$997. HT coaching $2K-5K. Affiliate revenue from financial products. Subscriptions work well.",mp2:"Immediate measurable impact. Strong emotional motivation. High LTV as customers progress from budget to invest to wealth."},arts:[{t:"Blog Niches That Make Money 2026",u:"https://lovable.dev/guides/profitable-blog-niches-2026",s:"Lovable.dev"},{t:"Trending Creator Niches: Finance",u:"https://www.teleprompter.com/blog/trending-niches-for-creators-right-now",s:"Teleprompter"},{t:"Most Profitable Online Courses",u:"https://www.aicoursify.com/most-profitable-online-courses",s:"AI Coursify"}]},
+{name:"Relationships & Dating",heat:80,gt:"attachment+theory,dating+coach,marriage+coaching",gts:"attachment%20theory,dating%20coach,marriage%20coaching",growth:"+31%",rev:"$1.4B",proj:"$3.2B",kw:["attachment styles","communication","dating","marriage coaching"],ins:"Consistently viral on IG. High emotional engagement = conversion. Psychology-backed approaches outperform generic advice. Couples coaching growing.",fut:"AI relationship coaching by 2028. Cohort-based 85% completion. Community-driven models dominant. Conversation cards as physical product extensions.",fits:{mp:"Universal need. Growing cultural awareness of attachment theory. Post-pandemic loneliness. Both singles and couples seek education. +31% YoY.",pc:"Highest saves/shares on IG. Emotional content = viral. YouTube deep-dives build authority. Podcast format exceptional for relationships.",cm:"Courses $297-$1,997. Couples coaching $2K-5K. Communities $47-$97/mo. Card decks/journals as tripwires. Cohort premium.",mp2:"Deeply personal = emotional motivation. Strong word-of-mouth. Physical products. Low refunds due to emotional investment."},arts:[{t:"Profitable Course Niches: Relationships",u:"https://www.mightynetworks.com/resources/profitable-online-course-niches",s:"Mighty Networks"},{t:"18 Profitable Niches 2026",u:"https://www.podbase.com/blogs/profitable-niches",s:"PodBase"}]},
+{name:"Real Estate",heat:76,gt:"real+estate+wholesaling,airbnb+arbitrage,rental+investing",gts:"wholesaling%20real%20estate,airbnb%20arbitrage,rental%20investing",growth:"+11%",rev:"$2.1B",proj:"$3.5B",kw:["wholesaling","Airbnb","rental investing","flipping"],ins:"Evergreen education niche. Airbnb management and wholesaling attract $2K-5K buyers. Commercial RE coaching growing fast.",fut:"AI property analysis standard by 2028. Tech + traditional RE strategy = premium. PropTech creating new course categories.",fits:{mp:"Evergreen demand. People always buy/sell/invest in property. Sub-niches (Airbnb, wholesaling) have distinct buyer personas willing to spend.",pc:"YouTube dominant for RE education. IG Reels for quick tips. FB groups large and active. Podcast authority strong in RE.",cm:"Courses $997-$4,997. Coaching $5K-$15K. Subscription communities with deal flow. High ticket justified by ROI on first deal.",mp2:"Massive ROI proposition — one deal pays for course many times over. Evergreen content. Local market angles create niche within niche."},arts:[{t:"Emerging Niches 2026: Real Estate",u:"https://prometai.app/blog/emerging-niches-business-planning",s:"Promet AI"},{t:"Profitable Niches 2026",u:"https://www.gelato.com/blog/profitable-niches",s:"Gelato"}]},
+{name:"Sustainability",heat:74,gt:"sustainable+business,zero+waste+living,circular+economy",gts:"sustainable%20business,zero%20waste,circular%20economy",growth:"+33%",rev:"$1.1T",proj:"$1.8T",kw:["zero waste","eco-business","green living","circular economy"],ins:"49% of Americans bought eco-friendly recently. 73% Gen Z pay more for sustainable. Ethical goods market past $1T. Low competition niche.",fut:"B2B sustainability education = goldmine as regulations tighten. Carbon literacy = recurring HT. ESG consulting courses for professionals.",fits:{mp:"$1T+ ethical goods market. 73% Gen Z premium for sustainable. Corporate ESG requirements driving B2B demand. Low competition.",pc:"TikTok sustainable swaps content performs well. YouTube for in-depth eco reviews. IG for lifestyle eco content. Blog SEO strong.",cm:"B2C courses $97-$497. B2B consulting training $1,997-$4,997. Subscription communities. Corporate training packages at premium.",mp2:"Values-aligned buyers = loyal customers. B2B angle transforms pricing. Regulatory tailwinds. Growing not shrinking."},arts:[{t:"Trending Creator Niches 2026: Sustainability",u:"https://www.teleprompter.com/blog/trending-niches-for-creators-right-now",s:"Teleprompter"},{t:"25+ Trending Niches 2026",u:"https://ecomposer.io/blogs/ecommerce/top-trending-niches",s:"EComposer"}]},
+{name:"Productivity & Remote Work",heat:72,gt:"notion+productivity,remote+work+tools,digital+nomad",gts:"notion%20productivity,remote%20work,digital%20nomad",growth:"+18%",rev:"$1.8B",proj:"$3.1B",kw:["Notion","time management","remote work","digital nomad"],ins:"18.5M American digital nomads in 2025 (+153% since 2019). 40% work remotely part-time. Productivity tools SaaS affiliates offer 20-30% recurring commissions.",fut:"AI productivity assistants will reshape this niche. Courses combining AI tools + workflows will command premium. Digital nomad lifestyle content evolving into business education.",fits:{mp:"18.5M digital nomads growing 2.2% YoY. 40% remote workers need productivity systems. Career advancement linked to output quality.",pc:"YouTube strong for tool tutorials. IG for workspace/lifestyle content. Podcast for interviews with remote leaders. Blog SEO high-intent.",cm:"Tool-specific courses $97-$299. Comprehensive programs $497-$997. SaaS affiliate 20-30% recurring. Coaching for remote teams $2K+.",mp2:"Immediate productivity gains measurable. Tool-specific = always fresh. Affiliate revenue supplements course revenue. B2B team training angle."},arts:[{t:"Blog Niches 2026: Remote Work",u:"https://lovable.dev/guides/profitable-blog-niches-2026",s:"Lovable.dev"},{t:"Top 10 Digital Product Niches 2026",u:"https://brainygirlu.com/top-10-digital-product-niches-that-will-dominate-2026-and-beyond/",s:"BrainyGirlU"}]},
+{name:"Parenting & Family",heat:70,gt:"gentle+parenting,ADHD+kids,homeschool+curriculum",gts:"gentle%20parenting,ADHD%20kids,homeschool",growth:"+15%",rev:"$1.2B",proj:"$2.4B",kw:["gentle parenting","ADHD kids","homeschool","family coaching"],ins:"Baby care market $107B+. Parents consistently invest in child development education. Homeschooling growing steadily. Special needs parenting underserved.",fut:"AI-powered personalized parenting guidance. Subscription models with age-specific content. Certification for parenting coaches growing.",fits:{mp:"Parents always invest in kids. Baby/child market $107B+. Specific sub-niches (ADHD, gentle parenting) have passionate buyer audiences.",pc:"Instagram dominant for parenting content. TikTok for quick tips. YouTube for in-depth guides. Pinterest drives course sales via SEO.",cm:"Courses $97-$497. Coaching $997-$2,997. Subscription with age-specific content $27-$49/mo. Physical products (workbooks, kits) as tripwires.",mp2:"Emotionally motivated buyers (will spend for their kids). High trust required = high loyalty once earned. Repeat purchase as kids age through stages."},arts:[{t:"Best Niches for Online Courses 2026",u:"https://betterdocs.co/best-niches-for-online-courses/",s:"BetterDocs"},{t:"10 Profitable Course Niches",u:"https://www.mightynetworks.com/resources/profitable-online-course-niches",s:"Mighty Networks"}]}
+];
+// ═══════ CREATORS (pre-loaded defaults, synced via Firebase) ═══════
+var DEFAULT_CREATORS=[
+{id:1,name:"Tanja Trades",ni:"Trading & Investing",ig:"tanjatrades",fo:"285K",of:"No offer",st:"new",sc:94,op:"Zero monetization, massive audience. Trading supports $2K-5K courses.",detail:"Young traders 22-35 who spend on tools. Above-avg engagement. No funnel/list.",next:"1) Webinar for $997-1,997 course 2) FB+YT ads 3) $97/mo community"},
+{id:2,name:"Gary Brecka",ni:"Health & Wellness",ig:"garybrecka",fo:"4.2M",of:"Mid Ticket",st:"prospect",sc:97,op:"Biohacking #1 sub-niche. 4.2M + only mid-ticket. Could do $500K/mo.",detail:"Most valuable by audience+niche. High-income males 30-55. Human biologist authority.",next:"1) $4,997 HT mastermind via webinar 2) Practitioner cert $2,997-5,997 3) Scale YT+FB ads 4) Supplement backend"},
+{id:3,name:"Shay Huang",ni:"Trading & Investing",ig:"humbledtrader",fo:"520K",of:"Mid/High Ticket",st:"messaged",sc:88,op:"Validated. Needs paid media scale + YT ads. Backend coaching doubles revenue.",detail:"Proven offer/sales. Strong YouTube. Has team but content-focused not growth.",next:"1) Audit funnel CRO 2) Scale YT ads 3) Add $5K coaching 4) Email sequences"},
+{id:4,name:"Sierra Aaliyah",ni:"Online Business",ig:"sierra.aaliyah",fo:"340K",of:"Low Ticket",st:"followed_up",sc:92,op:"Timeless niche. Low-ticket when audience supports $997-2K.",detail:"Women 25-40 building online businesses. High trust. Low-ticket validates buying behavior.",next:"1) $997-1,997 signature course 2) Webinar funnel 3) $297/mo community 4) IG+FB ads"},
+{id:5,name:"Jason Cooperson",ni:"AI & Automation",ig:"jasoncooperson",fo:"156K",of:"Low Ticket Skool",st:"followed_up",sc:89,op:"AI niche +64% YoY. Insane free value. Needs $1,997+ flagship.",detail:"Skool shows willingness to pay. Exceptional content. Professional/entrepreneur audience.",next:"1) $1,997 AI mastery course 2) Webinar with free AI workshop 3) Keep Skool as $47/mo upsell 4) FB ads"},
+{id:6,name:"Megan Lieu",ni:"AI & Automation",ig:"meglovesdata",fo:"210K",of:"No offer",st:"followed_up",sc:85,op:"Professional audience $1K-3K. Zero monetization.",detail:"Data science + AI intersection. Career-changers and upskillers. Educated audience.",next:"1) $997 career advancement course 2) Webinar for professionals 3) $197/mo community 4) LinkedIn+FB ads"},
+{id:7,name:"Ben Patrick",ni:"Fitness & Movement",ig:"kneesovertoesguy",fo:"2.4M",of:"Subscription",st:"messaged",sc:93,op:"Cult following. HT trainer cert $3K-5K could do $1M+ per launch.",detail:"Created own category (ATG). 2.4M loyal followers. Proprietary methodology. Subscription good but capped.",next:"1) ATG Cert $3,997-4,997 2) Quarterly launch events 3) Keep subscription as entry 4) YT ads w/ transformations"},
+{id:8,name:"Mikhaila Peterson",ni:"Health & Wellness",ig:"mikhailapeterson",fo:"1.1M",of:"Has offer",st:"messaged",sc:89,op:"Carnivore niche, massive brand. Funnel optimization = 3-5x.",detail:"Family name = built-in audience. Carnivore/elimination unique positioning. Funnel unoptimized.",next:"1) Audit/optimize funnel 2) $2,997 group coaching 3) Scale FB+YT ads 4) Supplement/food line"},
+{id:9,name:"Dr. Berg",ni:"Health & Wellness",ig:"drericberg",fo:"2.1M",of:"Subscription",st:"followed_up",sc:86,op:"Huge distribution. Subscription leaving money. $2,997 HT would print.",detail:"One of largest health YT creators. Dr. credential = authority. Audience 35-60, higher income.",next:"1) $2,997 premium program 2) Webinar to engaged email list 3) Coaching $5K+ 4) YT ad repurposing"},
+{id:10,name:"Dr. Mindy Pelz",ni:"Health & Wellness",ig:"dr.mindypelz",fo:"1.8M",of:"Mid Ticket",st:"messaged",sc:90,op:"Fasting/metabolic 1.8M. HT reset ($2,997) + practitioner cert.",detail:"Leading fasting voice. Books add authority. Women 35-55 hormonal health. No HT backend.",next:"1) $2,997 metabolic reset 2) Practitioner cert $4,997 3) Webinar funnels 4) Scale FB+YT"},
+{id:11,name:"Irma Vasquez",ni:"Health & Wellness",ig:"irmaveee",fo:"267K",of:"No/Low Ticket",st:"followed_up",sc:80,op:"Interesting niche, engaged audience. Needs offer architecture.",detail:"Unique health sub-niche. Engaged audience. Gap between size and revenue is enormous.",next:"1) Signature course $497-997 2) $47/mo community 3) Coaching $2K 4) Webinar + organic"},
+{id:12,name:"Jeff Nippard",ni:"Fitness & Movement",ig:"jeffnippard",fo:"3.4M",of:"Low/Mid Ticket",st:"messaged",sc:87,op:"Science fitness, massive YT. Underpriced. HT coaching or cert.",detail:"Evidence-based fitness. Massive YT = trust. Audience values science, will pay for quality.",next:"1) $1,997 advanced coaching/cert 2) Webinar for serious enthusiasts 3) Keep programs as entry 4) YT ads"},
+{id:13,name:"Celine Klarer",ni:"Online Business",ig:"celine.klarer",fo:"175K",of:"High Ticket",st:"followed_up",sc:81,op:"Has team, funnel leaks. Webinar below 4%, should be 7-9%.",detail:"Has existing team and HT offer. Problem is funnel conversion. Quick optimization wins available.",next:"1) Funnel audit — landing page + webinar CRO 2) New ad creative tests 3) Email sequence optimization"},
+{id:14,name:"Brody",ni:"AI & Automation",ig:"brodyautomates",fo:"95K",of:"Unknown",st:"followed_up",sc:82,op:"AI hottest market. $997-1,997 offer + ads = $50K/mo in 90 days.",detail:"AI automation niche growing fastest. Even at 95K, right offer with paid ads is highly profitable.",next:"1) Build $997-1,997 automation course 2) Webinar funnel 3) FB ads targeting business owners 4) Skool community upsell"},
+{id:15,name:"Dr. Rachel",ni:"Health & Wellness",ig:"collegenutritionist",fo:"890K",of:"Subscription",st:"followed_up",sc:84,op:"890K on subscription. Missing HT coaching. $2K = $100K/mo extra.",detail:"Large nutrition audience on subscription. No high-ticket coaching tier. Gap is enormous.",next:"1) Add $1,997 coaching program 2) Webinar to existing subscribers 3) Scale ads for new traffic 4) Upsell existing base"}
+];
+var C=DEFAULT_CREATORS.slice();
+var nextId=16;
+
+var S={new:{l:"New Lead",c:"#00e5a0",b:"rgba(0,229,160,.1)"},prospect:{l:"Prospect",c:"#00b4d8",b:"rgba(0,180,216,.1)"},messaged:{l:"Messaged",c:"#f4a261",b:"rgba(244,162,97,.1)"},followed_up:{l:"Followed Up",c:"#e9c46a",b:"rgba(233,196,106,.1)"},responded:{l:"Responded",c:"#a78bfa",b:"rgba(167,139,250,.1)"}};
+var STAGES=["new","prospect","messaged","followed_up","responded"];
+
+// STATE
+var st={tab:"market",sel:0,dt:"cold_dm",scNi:null,scPage:0,search:"",histFilter:null};
+function cp(t,b){navigator.clipboard.writeText(t).then(function(){var o=b.textContent;b.textContent="✓ Copied!";setTimeout(function(){b.textContent=o},2000)})}
+
+// ═══════ DATA SYNC ═══════
+window._msgLog={};
+loadCreatorsLocal();
+loadMsgsLocal();
+var fbReady=true;
+
+// Firebase real-time listeners — Firebase is the source of truth when connected
+if(db){
+try{
+// Seed Firebase with defaults if empty
+db.ref("creators").once("value",function(snap){
+if(!snap.exists()){
+var obj={};DEFAULT_CREATORS.forEach(function(c){obj[c.id]=c});
+db.ref("creators").set(obj);
+db.ref("meta/nextId").set(16);
+}
+fbConnected=true;
+});
+// Listen for creator changes from any team member
+db.ref("creators").on("value",function(snap){
+var data=snap.val();
+if(data){
+C=[];
+Object.keys(data).forEach(function(k){C.push(data[k])});
+C.sort(function(a,b){return b.sc-a.sc});
+}else{
+C=DEFAULT_CREATORS.slice();
+}
+saveCreatorsLocal();
+render();
+});
+db.ref("meta/nextId").on("value",function(snap){
+if(snap.val())nextId=snap.val();
+});
+// Listen for message changes from any team member
+db.ref("messages").on("value",function(snap){
+window._msgLog=snap.val()||{};
+saveMsgsLocal();
+render();
+});
+}catch(e){console.log("Firebase listeners failed:",e)}
+}
+
+// ═══════ AUDIENCE PSYCHOLOGY + MOAT + BEST BUYER + NICHE REFRAMES ═══════
+function getAudienceSegments(cr){
+var segs={
+"AI & Automation":[
+{name:"The Career Pivoter",pain:"Terrified AI will replace their job. Watching less technical people pass them by. Feels behind.",desire:"Wants to become the person who understands AI, not the person replaced by it.",buys:"Courses, certifications, tools. Willing to spend $500-$2K to future-proof their income.",best:true},
+{name:"The Solopreneur Automator",pain:"Drowning in manual tasks. Can't afford to hire. Knows AI could help but doesn't know where to start.",desire:"Wants to run a lean business that prints money while they sleep. Obsessed with efficiency.",buys:"Automation blueprints, tool tutorials, done-with-you setups. $297-$997 sweet spot."},
+{name:"The Tech-Curious Creator",pain:"Sees other creators using AI to produce 10x more content. Feels overwhelmed by options.",desire:"Wants a simple, repeatable AI workflow for content and business. Not trying to become an engineer.",buys:"Beginner-friendly AI courses, prompt packs, creator-specific tools. $97-$497."}],
+"Health & Wellness":[
+{name:"The Self-Optimizer",pain:"Tired of conflicting health advice. Has tried everything. Wants science-backed, personalized guidance.",desire:"Wants to feel in control of their health. Craves a system, not another fad. Willing to invest serious money.",buys:"Comprehensive programs, lab-backed protocols, coaching. $997-$4,997. High LTV.",best:true},
+{name:"The Chronic Struggler",pain:"Dealing with a specific condition (gut issues, fatigue, hormonal imbalance). Desperate for answers. Has spent thousands already.",desire:"Wants someone who understands their specific problem and can give them a clear path forward.",buys:"Condition-specific programs, practitioner access, community. $497-$2,997."},
+{name:"The Wellness Curious",pain:"Knows they should be healthier but overwhelmed by where to start. Consumes free content endlessly.",desire:"Wants a simple starting point. Needs hand-holding and motivation more than information.",buys:"Entry-level challenges, subscriptions, low-ticket guides. $27-$197. Gateway buyer."}],
+"Mental Health":[
+{name:"The Healing Seeker",pain:"Knows something is wrong but can't afford or access traditional therapy. Turning to online resources.",desire:"Wants to understand themselves — attachment style, nervous system, trauma responses. Craves language for their experience.",buys:"Self-paced courses, community membership, journaling programs. $297-$1,997.",best:true},
+{name:"The Practitioner",pain:"Licensed therapist or coach who wants to build an online practice. Has expertise but no business system.",desire:"Wants to reach more people and earn more without burning out. Certification programs appeal strongly.",buys:"Certifications, business-building for practitioners, cohort programs. $2,997-$7,000."},
+{name:"The Supporter",pain:"Loves someone who is struggling. Wants to understand how to help without making it worse.",desire:"Wants practical tools for supporting a partner, child, or friend. Emotionally motivated buyer.",buys:"Workshops, relationship-specific mental health programs, books. $47-$497."}],
+"Trading & Investing":[
+{name:"The Aspiring Trader",pain:"Wants financial freedom but keeps losing money. Information overload. Doesn't know who to trust.",desire:"Wants a proven system and someone who actually trades live, not just teaches. Needs accountability.",buys:"Trading courses with live signals, mentorship, community rooms. $997-$4,997.",best:true},
+{name:"The Side-Income Seeker",pain:"Has a day job but wants to build a second income stream. Dabbles in crypto or options on weekends.",desire:"Wants a low-time-commitment strategy that actually works. Doesn't want to quit their job yet.",buys:"Beginner courses, signal subscriptions, weekend trading programs. $97-$497/mo."},
+{name:"The Portfolio Builder",pain:"Has savings but doesn't trust financial advisors. Wants to manage their own wealth intelligently.",desire:"Wants long-term wealth building education, not day-trading hype. Values trust and track record.",buys:"Investment education, portfolio courses, premium newsletters. $297-$997."}],
+"Fitness & Movement":[
+{name:"The Transformation Seeker",pain:"Unhappy with their body. Has tried gym routines and diets that didn't stick. Wants lasting change.",desire:"Wants a program that actually works AND that they can maintain. Craves accountability and community.",buys:"12-week programs, coaching, challenges with community. $197-$997.",best:true},
+{name:"The Performance Chaser",pain:"Already fit but hitting plateaus. Wants to optimize recovery, mobility, or athletic performance.",desire:"Wants expert-level programming. Will pay premium for specificity and results.",buys:"Advanced programs, 1:1 coaching, certifications. $497-$2,997."},
+{name:"The Pain Resolver",pain:"Dealing with knee pain, back issues, or mobility problems. Frustrated with traditional PT.",desire:"Wants to move without pain. Willing to try unconventional approaches if they see proof.",buys:"Condition-specific programs, mobility courses, ongoing memberships. $97-$497."}],
+"Online Business":[
+{name:"The Aspiring Course Creator",pain:"Has expertise but no idea how to package and sell it. Overwhelmed by tech, funnels, and marketing.",desire:"Wants a clear roadmap from knowledge to revenue. Needs someone to simplify the process.",buys:"Course creation programs, coaching, done-with-you buildouts. $997-$4,997.",best:true},
+{name:"The Stuck Agency Owner",pain:"Running a service business that trades time for money. Can't scale past a ceiling.",desire:"Wants to productize their expertise into something leveraged — a course, membership, or program.",buys:"Business model transformation programs, masterminds. $2,997-$10,000."},
+{name:"The Side Hustler",pain:"Working a 9-5 and building something on the side. Limited time, limited budget.",desire:"Wants a realistic path to replacing their income. Needs proof it's possible for normal people.",buys:"Low to mid-ticket courses, communities. $97-$497."}],
+"Personal Finance":[
+{name:"The Debt Escapee",pain:"Drowning in student loans, credit card debt, or living paycheck to paycheck. Feels hopeless.",desire:"Wants a clear, step-by-step plan to get out of debt and start building wealth. Emotionally desperate.",buys:"Budget programs, debt payoff courses, accountability communities. $47-$497.",best:true},
+{name:"The New Investor",pain:"Has some savings but terrified of losing it. Doesn't understand the stock market or crypto.",desire:"Wants someone trustworthy to teach them where to put their money. Low risk tolerance.",buys:"Beginner investing courses, portfolio builders, newsletters. $97-$497."},
+{name:"The FIRE Pursuer",pain:"Earns good income but wants to retire early. Obsessed with optimization and savings rate.",desire:"Wants advanced strategies — tax optimization, real estate, index funds, side income stacking.",buys:"Advanced programs, masterminds, high-ticket coaching. $497-$2,997."}],
+"Relationships & Dating":[
+{name:"The Heartbroken Healer",pain:"Going through or recovering from a breakup or divorce. Questioning everything about relationships.",desire:"Wants to understand what went wrong and how to do it differently next time. Emotionally open to investing.",buys:"Self-discovery courses, attachment style programs, coaching. $197-$997.",best:true},
+{name:"The Anxious Partner",pain:"In a relationship but constantly worried — are they enough? Is their partner pulling away?",desire:"Wants tools to communicate better and feel secure. Craves understanding of attachment dynamics.",buys:"Couples workshops, communication courses, community. $97-$497."},
+{name:"The Intentional Dater",pain:"Tired of dating apps and surface-level connections. Wants to find a real partner.",desire:"Wants a strategic, self-aware approach to dating. Values depth over hacks.",buys:"Dating programs, confidence coaching, in-person events. $297-$1,997."}],
+"Real Estate":[
+{name:"The First Deal Hunter",pain:"Wants to get into real estate but has no idea where to start. Analysis paralysis.",desire:"Wants someone to show them step-by-step how to close their first deal. One deal pays for the course.",buys:"Beginner courses, mentorship, deal-finding tools. $997-$4,997.",best:true},
+{name:"The Scale Seeker",pain:"Has a few properties but stuck. Can't figure out how to go from 3 doors to 30.",desire:"Wants systems, team building, and creative financing strategies to scale their portfolio.",buys:"Advanced programs, masterminds, coaching. $2,997-$10,000."},
+{name:"The Passive Income Dreamer",pain:"Hates their job and believes real estate is the way out. Consumes content constantly but hasn't acted.",desire:"Needs motivation AND a simplified path. Wants proof from normal people, not gurus.",buys:"Entry-level courses, challenges, community. $97-$497."}],
+"Sustainability":[
+{name:"The Conscious Consumer",pain:"Wants to live sustainably but overwhelmed by greenwashing and conflicting info.",desire:"Wants clear, practical guidance on sustainable living that actually makes a difference.",buys:"Lifestyle courses, subscription guides, product recommendations. $47-$297.",best:true},
+{name:"The Green Entrepreneur",pain:"Wants to build a business aligned with their values. Sees the market growing but doesn't know how to enter.",desire:"Wants a roadmap for building a sustainable business or adding sustainability to an existing one.",buys:"Business courses, consulting training, certifications. $497-$4,997."}],
+"Productivity & Remote Work":[
+{name:"The Overwhelmed Remote Worker",pain:"Working from home but distracted, unstructured, and burning out. Boundaries don't exist.",desire:"Wants a system that makes remote work sustainable and productive. Craves structure.",buys:"Productivity systems, tool courses, coaching. $97-$497.",best:true},
+{name:"The Aspiring Nomad",pain:"Wants location freedom but doesn't know how to make the leap. Scared of instability.",desire:"Wants a realistic plan for going remote or freelance without going broke.",buys:"Lifestyle design programs, freelancing courses, community. $297-$997."}],
+"Parenting & Family":[
+{name:"The Struggling Parent",pain:"Dealing with behavioral challenges, ADHD, tantrums, or feeling like they're failing. Guilty and exhausted.",desire:"Wants to feel confident as a parent. Needs practical strategies that actually work with their specific child.",buys:"Parenting programs, coaching, age-specific courses. $97-$997.",best:true},
+{name:"The Intentional Homeschooler",pain:"Chose homeschooling but overwhelmed by curriculum options and socialization concerns.",desire:"Wants a community and curriculum framework that makes homeschooling manageable and effective.",buys:"Curriculum programs, co-op memberships, coaching. $197-$497."}]
+};
+return segs[cr.ni]||segs["Online Business"];
+}
+
+function getCreatorMoat(cr){
+var has=cr.of!=="No offer"&&cr.of!=="No/Low Ticket"&&cr.of!=="Unknown";
+var moats=[];
+// Assess what makes this creator un-copyable
+if(parseInt(cr.fo)>500||cr.fo.indexOf("M")>-1)moats.push({type:"Audience Scale",desc:"With "+cr.fo+" followers, "+cr.name+" has built a level of trust and reach that takes years to replicate. This audience IS the moat — no competitor can copy it."});
+if(cr.fo.indexOf("M")>-1)moats.push({type:"Category Authority",desc:cr.name+" is a household name in "+cr.ni+". Their personal brand carries weight that makes any product they endorse instantly credible."});
+moats.push({type:"Unique Methodology",desc:"Every expert has a proprietary way they do things — a framework, a system, a philosophy that's distinctly theirs. The webinar should be built around this unique method, not generic "+cr.ni+" advice. Ask "+cr.name+": 'What's your approach that's different from everyone else in your space?' That answer becomes the core of the offer."});
+moats.push({type:"Personal Story",desc:cr.name+"'s personal journey — why they got into "+cr.ni+", the struggles they overcame, the transformation they experienced — is something no competitor can replicate. This story should be woven into the webinar introduction and the sales messaging."});
+if(has)moats.push({type:"Existing Buyer Base",desc:cr.name+" already has customers buying their "+cr.of.toLowerCase()+". These existing buyers are the warmest possible audience for a high-ticket upsell. This is a massive competitive advantage — most creators start from zero."});
+return moats;
+}
+
+function getNicheReframes(ni){
+var reframes={
+"AI & Automation":[
+{myth:"AI courses are already saturated — everyone's teaching this.",flip:"The tools change every month. Yesterday's course is already outdated. That's not saturation — that's recurring demand. The creator who stays current wins forever."},
+{myth:"My audience can just learn this from YouTube for free.",flip:"Free content teaches individual tools. A structured program teaches how to connect those tools into a system that generates revenue. That's the gap no YouTube video fills."},
+{myth:"AI is going to make courses obsolete anyway.",flip:"AI makes generic information free. But expert-led, experience-based education becomes MORE valuable because it's the one thing AI can't fake. A webinar with a real expert is the ultimate proof of that."}],
+"Health & Wellness":[
+{myth:"Health creators are worried about liability and making medical claims.",flip:"The webinar doesn't give medical advice — it gives education and lifestyle guidance. The same way a book does. Structure the offer around empowerment, not diagnosis, and liability becomes a non-issue."},
+{myth:"My audience expects free health content — they won't pay.",flip:"They pay $200/month for supplements they found on Instagram. They pay $150 for a 15-minute doctor visit. A comprehensive program from someone they already trust? That's the easiest sell in the world."},
+{myth:"The health space is too regulated for webinar funnels.",flip:"Regulated doesn't mean restricted. It means you need the right positioning. Thousands of health creators run compliant webinar funnels generating millions. We know exactly how to structure it."}],
+"Mental Health":[
+{myth:"This feels too personal for a webinar — my audience needs 1-on-1.",flip:"A webinar actually creates more intimacy than a sales page. The audience sees your face, hears your voice, feels your energy for 60-90 minutes. Then 1-on-1 coaching becomes the premium offer on the backend."},
+{myth:"I don't want to come across as selling healing.",flip:"You're not selling healing — you're selling access to your knowledge, community, and frameworks. The free content heals. The paid offer goes deeper and provides structure and accountability."},
+{myth:"My audience can't afford expensive programs.",flip:"Your audience is already spending thousands on therapy, supplements, and self-help books. A structured program that actually moves the needle is cheaper than what they're already paying piecemeal."}],
+"Trading & Investing":[
+{myth:"Trading education has a bad reputation — too many scammers.",flip:"Exactly why your audience is desperate for someone they actually trust. The scammer problem means the bar for authenticity is low. Show real trades, real results, real transparency — and you instantly stand out."},
+{myth:"If I'm a good trader, why would I teach instead of just trading?",flip:"Because teaching scales infinitely while trading scales linearly. One webinar can generate more revenue than a month of trades — and it builds a community that becomes a moat around your business."},
+{myth:"My audience just wants free signals, they won't pay for education.",flip:"Signal followers are the worst customers. Education buyers become lifelong students who buy every program you create. The webinar filters for the right people and repels the signal chasers."}],
+"Fitness & Movement":[
+{myth:"There are a million fitness programs already — why would mine stand out?",flip:"Because your audience doesn't follow a million fitness creators. They follow YOU. The program is just the vehicle — the trust and relationship you've built is the actual product."},
+{myth:"My audience can just follow my free content and get results.",flip:"They can. But less than 5% actually will. A structured program with accountability, community, and progression is the difference between watching content and actually transforming."},
+{myth:"Webinars don't work for fitness — people want to see workouts, not sit through a presentation.",flip:"The webinar sells the transformation, not the workout. Nobody buys a gym membership because they love treadmills — they buy the version of themselves on the other side. The webinar paints that picture."}],
+"Online Business":[
+{myth:"My audience is other creators — they already know about webinars and funnels.",flip:"Knowing about funnels and having a profitable one are completely different things. 90% of course creators make less than $1K. The opportunity is showing them a system that actually works at scale."},
+{myth:"The course-about-courses market feels oversaturated.",flip:"The market for generic 'start an online business' is saturated. But a specific methodology for a specific outcome? That's a category of one. The webinar should teach your unique approach, not the generic playbook."}],
+"Personal Finance":[
+{myth:"People won't pay for finance advice they can get free from blogs.",flip:"They're not paying for information — they're paying for accountability, structure, and a community that keeps them on track. Free blogs don't call you out when you miss your savings goal."},
+{myth:"I'm not a licensed financial advisor — can I even do this?",flip:"You're not giving investment advice — you're teaching financial literacy, habits, and frameworks. Thousands of finance creators do this legally and profitably. Education is not advisory."}],
+"Relationships & Dating":[
+{myth:"Relationship advice is too personal — people won't buy a course on it.",flip:"People spend thousands on therapy, dating apps, and self-help books for relationships. A structured program from someone they trust is actually a better value than what they're already spending."},
+{myth:"My audience would be embarrassed to join a relationship program.",flip:"That's why the webinar format works perfectly — it's private, they watch from home, and the community is anonymous if they want it to be. The shame barrier is actually lower than people think."}],
+"Real Estate":[
+{myth:"Real estate education is full of gurus selling dreams.",flip:"Which is exactly why someone with real deals, real properties, and real track record stands out immediately. Your audience is begging for someone who isn't faking it."},
+{myth:"The market is down right now — bad time to sell RE education.",flip:"Down markets are when the most money is made in real estate. Your audience knows that. A program on how to find deals in a downturn is actually MORE valuable right now than in a hot market."}]
+};
+return reframes[ni]||reframes["Online Business"]||[];
+}
+
+
+function gDM(cr){var fn=cr.name.split(" ")[0],has=cr.of!=="No offer"&&cr.of!=="No/Low Ticket"&&cr.of!=="Unknown",n=cr.ni.toLowerCase(),ni=N.find(function(x){return x.name===cr.ni}),gr=ni?ni.growth:"+25%";
+var det=cr.detail||"",op=cr.op||"",nxt=cr.next||"";
+
+// ── PROBLEM IDENTIFIER — what's holding this creator back? ──
+var problem="";
+if(!has){
+problem="You've built something people genuinely care about — "+cr.fo+" followers don't happen by accident. But right now, all of that trust and attention isn't generating revenue. And the longer that gap exists, the harder it gets to close, because your audience starts to expect everything for free.";
+}else if(cr.of.indexOf("Low")>-1||cr.of.indexOf("Subscription")>-1){
+problem="Your "+cr.of.toLowerCase()+" tells me your audience is willing to invest in what you teach — that's huge. But the challenge with that model is there's a ceiling. You're probably working harder than you need to for the revenue you're generating, and there's a whole tier of buyers in your audience who would pay significantly more for a deeper experience.";
+}else if(cr.of.indexOf("Mid")>-1){
+problem="You've got a solid foundation with your mid-ticket offer. The thing most creators at your level don't realize is that the most profitable part of the business — the high-ticket backend — is usually missing entirely. It's the difference between a good month and a $100K+ month, and it doesn't require more followers or more content.";
+}else{
+problem="From what I can see, you have the pieces in place but the system connecting them isn't optimized. "+(op?op.split(".")[0]+".":"The funnel, the offer structure, the backend — there's significant revenue being left on the table that a tighter system would capture.");
+}
+
+// ── WHAT WE'D SOLVE — specific to their data ──
+var solution="";
+if(nxt){
+var s1=nxt.replace(/^1\)\s*/,"").split(/\s*2\)/)[0].trim();
+solution=s1;
+}else solution="building a webinar system that turns your audience into consistent revenue";
+
+// ── THEIR SPECIFIC ANGLE — what makes them special ──
+var theirThing="";
+if(det){
+var d1=det.split(".")[0].trim();
+if(d1.length>8)theirThing=d1.charAt(0).toLowerCase()+d1.slice(1);
+}
+if(!theirThing)theirThing="the way you approach "+n;
+
+// ── PRICE from their next steps ──
+var priceMatch=nxt.match(/\$[\d,]+[-–]?\$?[\d,]*/);
+var price=priceMatch?priceMatch[0]:"$997-$2,997";
+
+return{cold_dm:[
+{a:"The Observation",t:"Warm & Curious",h:fn+" — been meaning to reach out to you",b:"I've been following your content for a while now, and what keeps drawing me back is "+theirThing+". There's a depth to what you do that most "+n+" creators don't have.\n\nHere's why I'm actually reaching out though — "+problem+"\n\nI work with creators in your space and I've seen this exact situation turn into something really significant. Would you be down for a quick conversation about it? Not a sales call — I just want to share what I'm seeing from your brand specifically."},
+{a:"The Problem Solver",t:"Value-Forward",h:fn+" — I think I see a gap in your business",b:"I'm going to be direct because I think you'll appreciate it.\n\nI build webinar funnels for "+n+" creators — it's all my company does. And when I looked at your brand, something jumped out at me: "+problem+"\n\nThe reason I'm bringing this up is because I recently helped a "+n+" creator solve this exact problem. They went from a similar spot to generating $996K in 200 days. The solution was "+solution+" — and based on what I see with your audience, I think the math would work even better for you.\n\nWould you be open to 15 minutes so I can walk you through what I'd do specifically for your brand?"},
+{a:"The Results Drop",t:"Proof-Led",h:fn+" — your brand reminds me of a creator we just worked with",b:"I'll keep this short because I know you're busy.\n\nWe just helped a "+n+" creator build a webinar system that's generating $300K/mo — and they're working maybe 10 hours a week on it. When I looked at your page, the first thing I thought was how similar your situation is to where they were before we started.\n\n"+(has?"They also had a "+cr.of.toLowerCase()+" offer and the same gap you have — "+op.split(".")[0].toLowerCase()+".":"They also had a large engaged audience with no real offer in place — just like you.")+"\n\nI'm not trying to pitch you — I genuinely think there's something here worth exploring. Would a 15 minute call make sense?"},
+{a:"The Loom Offer",t:"Generous & Specific",h:fn+" — made something for you. Takes 2 min to watch.",b:"This might seem forward, but I studied your brand and put together a quick Loom walking through what I'd build if we worked together.\n\nHere's what it covers:\n- The specific problem I see with how you're currently set up\n- What "+solution+" would look like for your audience\n- A realistic revenue projection at "+price+" for the first 90 days\n\nI did this because I genuinely see the opportunity and I think you'd find it valuable even if we never work together. "+fn+", "+theirThing+" is something special — and I think the business side just hasn't caught up to the content side yet.\n\nWant me to send it over?"}],
+follow_ups:[
+{a:"Day 3 — Soft bump",t:"Warm",h:"Hey "+fn+" — just making sure this didn't get lost",b:"I know you probably get a hundred messages a day so I just wanted to float this back up.\n\nI reached out a few days ago about something I noticed with your brand — specifically around "+op.split(".")[0].toLowerCase()||"the opportunity I see for you"+". I genuinely think it's worth a conversation.\n\nNo rush at all — just didn't want it buried."},
+{a:"Day 7 — New angle",t:"Insight-Driven",h:fn+" — came across something relevant to you this week",b:"I was digging into "+n+" market data this week and your name kept coming up in my head.\n\nThe space is growing "+gr+" year over year right now, and the creators who are winning biggest are the ones solving the exact problem you're facing — "+(has?"taking what's already working and building a high-ticket backend around it.":"turning an engaged audience into a structured revenue system.")+"\n\nI have a really specific idea for your brand that I think would change the trajectory of your business. Would you be open to hearing it? 15 minutes, and if it doesn't resonate, I'll be the first to say so."},
+{a:"Day 14 — Honest close",t:"Real & Respectful",h:"Last message from me, "+fn+" — I promise",b:"I've reached out a couple times now and I completely respect that you're busy building.\n\nI'll just leave you with this: "+problem.split(".")[0]+". And I've watched creators in your exact position go from where you are to $100K+ months once that piece clicks into place.\n\nIf the timing isn't right, I genuinely understand. But if there's even a small part of you that's curious, I'm here whenever it makes sense.\n\nRegardless — what you're creating is impressive. I mean that."},
+{a:"Day 30 — Case study",t:"Proof & Timing",h:fn+" — thought you'd want to see this",b:"Hope you've been well.\n\nQuick update — a "+n+" creator we've been working with just hit $127K in a single month. They started from a really similar spot to you"+(has?" — also had a "+cr.of.toLowerCase()+" before we built the webinar system around it.":".")+"\n\nHere's what made it work: a webinar converting above 8%, Meta ads at roughly $10 per lead, and a sales team closing about 35% of calls. The math is honestly elegant once it's dialed in.\n\nEvery time I see these results come through, I think about the conversation we haven't had yet.\n\nWould now be better timing?"}],
+voice_notes:[
+{a:"60-Second Script",t:"Natural & Confident",h:"\uD83C\uDFA4 Voice Note Script",b:"\"Hey "+fn+", hope you're doing well — just wanted to send you a quick voice note.\n\nSo I've been following your "+n+" content for a while and I have to be honest with you — "+theirThing+" is really impressive. Like genuinely better than most of the creators I work with in this space.\n\nThe reason I'm reaching out is because I noticed something about your business that I think is worth talking about. "+(has?"You have a "+cr.of.toLowerCase()+" which is great, but I think there's a much bigger play sitting right in front of you that most people miss.":"You've built this incredible audience but you're not really monetizing it yet, and honestly that's the most exciting position to be in because it means we can build something from the ground up.")+"\n\nMy company builds webinar funnels for creators — that's literally all we do. And I think I could show you something in 15 minutes that would change how you think about your business.\n\nNo pressure at all — just let me know if you're open to it.\"\n\n⏱️ KEEP UNDER 60 SECONDS\n🎯 Be natural — don't read this word for word\n💡 Voice notes get 3x higher response than text"},
+{a:"30-Second Script",t:"Quick & Direct",h:"\uD83C\uDFA4 Voice Note Script (Short)",b:"\"Hey "+fn+" — saw your latest content and had to send this.\n\nI build webinar funnels for "+n+" creators and when I looked at your brand, I saw a specific opportunity that I think is worth talking about. "+(has?"Especially with what you've already built.":"Especially with the audience you have.")+"\n\nWould you be open to a quick call this week?\"\n\n⏱️ 30 SECONDS MAX\n🎯 Best as a follow-up when text DM hasn't gotten a reply"}],
+objections:[
+{a:"\"Not interested\"",t:"Respectful",h:"When they decline:",b:"\"I appreciate you being straight with me, "+fn+". That honestly means a lot.\n\nCan I ask one thing though — is it that growing the business isn't a focus right now, or is it more of a timing thing? Because if it's timing, I'd love to stay connected and circle back when it makes more sense.\n\nEither way, no hard feelings at all. What you're building is genuinely great.\"\n\n💡 This separates 'never' from 'not now' — 60% are timing, not real objections."},
+{a:"\"I have a team\"",t:"Collaborative",h:"When they already have people:",b:"\"That's actually great to hear — it tells me you're serious about the business side, which honestly makes this conversation more relevant, not less.\n\nQuick question: is your team handling the webinar funnel, the paid media, AND the sales calls? Because what I see with most creators is they have amazing content teams but nobody's actually building the revenue engine.\n\nWe don't compete with your team — we handle the piece that makes everything they're already doing more profitable. Might be worth a quick call just to see if there's a gap we could fill.\"\n\n💡 Most creator teams handle content, not growth. This positions you as the missing piece."},
+{a:"\"How much?\"",t:"Confident & Honest",h:"When pricing comes up too early:",b:"\"Appreciate you asking — honestly it depends on what we'd build together because every partnership looks a little different.\n\nBut here's what I'd rather do: let me show you the opportunity first. If the numbers make sense, the pricing conversation is easy. And if they don't make sense, I'll be the first person to tell you it's not the right fit.\n\n15 minutes this week? I'll come with real numbers, not a pitch.\"\n\n💡 Never quote pricing in DMs. The goal is always getting to the call."},
+{a:"\"Send me info\"",t:"Warm Redirect",h:"When they want a deck or PDF:",b:"\"For sure — honestly though, the best way for me to share what I'm thinking is a quick call rather than a document. What I'd walk you through is really specific to your brand and your audience, so it doesn't translate well to a generic PDF.\n\nI'm talking the exact offer I'd build, what the revenue realistically looks like, and how the whole thing works day to day. Plus you can ask me anything live.\n\nDoes sometime this week work for a quick 15?\"\n\n💡 'Send me info' is almost always a polite deflection. Converting to a call is 10x more effective."}]};}
+
+
+// ═══════ MODALS ═══════
+function showNiche(n){var mr=document.getElementById("mr"),h='<div class="mbg" onclick="document.getElementById(\'mr\').innerHTML=\'\'"><div class="mdl" onclick="event.stopPropagation()"><button class="mx" onclick="document.getElementById(\'mr\').innerHTML=\'\'">✕</button>';
+h+='<h2 style="font-family:Instrument Serif,serif;font-size:24px;margin-bottom:4px">'+n.name+'</h2><div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px"><span class="tag tg">Heat: '+n.heat+'</span><span class="tag">'+n.growth+'</span><span class="tag">'+n.rev+'</span><span class="tag" style="border-color:rgba(167,139,250,.2);color:#a78bfa">2029: '+n.proj+'</span></div>';
+h+='<div class="cd" style="margin-bottom:10px"><h4 style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#5c5c78;margin-bottom:5px">📊 Current Insight</h4><p style="font-size:12.5px;line-height:1.6;color:#9494b0">'+n.ins+'</p></div>';
+h+='<div class="cd" style="margin-bottom:14px;border-color:rgba(167,139,250,.15)"><h4 style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#a78bfa;margin-bottom:5px">🔮 2027-2029</h4><p style="font-size:12.5px;line-height:1.6;color:#9494b0">'+n.fut+'</p></div>';
+// Google Trends links for this niche
+h+='<h3 style="font-size:13px;font-weight:700;margin:14px 0 8px">📈 Google Trends — '+n.name+'</h3>';
+h+='<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">';
+h+='<a href="https://trends.google.com/trends/explore?date=today%2012-m&geo=US&q='+encodeURIComponent(n.kw[0])+','+encodeURIComponent(n.kw[1])+','+encodeURIComponent(n.kw[2]||n.kw[0])+'" target="_blank" style="font-size:11px;padding:6px 14px;background:rgba(0,229,160,.08);border:1px solid rgba(0,229,160,.15);border-radius:6px;color:#00e5a0;text-decoration:none;font-weight:600">📈 Compare All Keywords →</a>';
+n.kw.forEach(function(k){h+='<a href="https://trends.google.com/trends/explore?date=today%2012-m&geo=US&q='+encodeURIComponent(k)+'" target="_blank" style="font-size:11px;padding:5px 12px;background:rgba(0,180,216,.08);border:1px solid rgba(0,180,216,.15);border-radius:6px;color:#00b4d8;text-decoration:none">'+k+' →</a>';});
+h+='</div>';
+h+='<h3 style="font-size:13px;font-weight:700;margin:14px 0 8px">📰 Source Articles</h3>';
+if(n.arts)n.arts.forEach(function(a){h+='<a class="art" href="'+a.u+'" target="_blank"><strong>'+a.t+'</strong><em>'+a.s+'</em></a>';});
+var nc=C.filter(function(c){return c.ni===n.name});
+if(nc.length){h+='<h3 style="font-size:13px;font-weight:700;margin:14px 0 8px">👤 Creators in '+n.name+' ('+nc.length+')</h3>';
+nc.forEach(function(c){h+='<div class="cd" style="margin-bottom:6px;padding:12px;cursor:pointer" onclick="event.stopPropagation();showCreator(C.find(function(x){return x.id==='+c.id+'}))"><b style="font-size:12px">'+c.name+'</b> <a href="https://www.instagram.com/'+c.ig+'/" target="_blank" onclick="event.stopPropagation()" style="font-size:10px;color:#a78bfa;text-decoration:none">@'+c.ig+'</a> <span style="font-size:10px;color:#9494b0">· '+c.fo+'</span><br><small style="font-size:11px;color:#9494b0;line-height:1.5">'+c.op+'</small></div>';});}
+h+='</div></div>';mr.innerHTML=h;}
+
+function showCreator(c){if(!c)return;var mr=document.getElementById("mr"),ni=N.find(function(x){return x.name===c.ni}),s=S[c.st]||S.new;
+var h='<div class="mbg" onclick="document.getElementById(\'mr\').innerHTML=\'\'"><div class="mdl" onclick="event.stopPropagation()"><button class="mx" onclick="document.getElementById(\'mr\').innerHTML=\'\'">✕</button>';
+h+='<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px"><div class="sc-ring">'+c.sc+'</div><div><h2 style="font-family:Instrument Serif,serif;font-size:22px">'+c.name+'</h2><p style="font-size:12px;color:#9494b0"><a href="https://www.instagram.com/'+c.ig+'/" target="_blank" style="color:#a78bfa;text-decoration:none">@'+c.ig+'</a> · '+c.ni+' · '+c.fo+'</p></div></div>';
+h+='<a href="https://www.instagram.com/'+c.ig+'/" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);border-radius:8px;color:#fff;text-decoration:none;font-size:12px;font-weight:600;margin-bottom:14px;transition:.2s">📸 View Instagram Profile → @'+c.ig+'</a>';
+h+='<div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px"><span class="tag tg">Score: '+c.sc+'</span><span class="sta" style="background:'+s.b+';color:'+s.c+'">● '+s.l+'</span><span class="tag">'+c.of+'</span></div>';
+h+='<div class="cd" style="margin-bottom:10px"><h4 style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#00e5a0;margin-bottom:5px">💰 Opportunity</h4><p style="font-size:12.5px;line-height:1.6;color:#9494b0">'+c.op+'</p></div>';
+if(c.detail)h+='<div class="cd" style="margin-bottom:10px"><h4 style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#5c5c78;margin-bottom:5px">📋 Analysis</h4><p style="font-size:12.5px;line-height:1.6;color:#9494b0">'+c.detail+'</p></div>';
+if(c.next)h+='<div class="cd" style="margin-bottom:10px;border-color:rgba(0,229,160,.15)"><h4 style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#00e5a0;margin-bottom:5px">🎯 Next Steps</h4><p style="font-size:12.5px;line-height:1.6;color:#9494b0">'+c.next+'</p></div>';
+if(ni)h+='<div class="cd" style="margin-bottom:10px"><h4 style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#00b4d8;margin-bottom:5px">📊 '+ni.name+' Market</h4><p style="font-size:12px;color:#9494b0">'+ni.rev+' → '+ni.proj+' by 2029 | '+ni.growth+' YoY | Heat '+ni.heat+'</p></div>';
+h+='<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px"><button class="btn bp" onclick="document.getElementById(\'mr\').innerHTML=\'\';askAI(\'Draft me an Instagram DM for '+c.name.replace(/'/g,"")+" (@"+c.ig+"), a "+c.ni.replace(/'/g,"")+" creator with "+c.fo+" followers. Their current offer is: "+c.of.replace(/'/g,"")+". Opportunity: "+c.op.replace(/'/g,"").replace(/\n/g," ")+"')\">🤖 Draft DM with AI</button><button class=\"btn bs\" onclick=\"document.getElementById('mr').innerHTML='';askAI('What is the best offer strategy for "+c.name.replace(/'/g,"")+" (@"+c.ig+") in the "+c.ni.replace(/'/g,"")+" niche with "+c.fo+" followers? They currently have: "+c.of.replace(/'/g,"")+"')\">🎯 Ask AI: Best Offer Strategy</button></div>";
+h+='</div></div>';mr.innerHTML=h;}
+
+// ═══════ MARKET INTEL ═══════
+function rMkt(){var r=document.createElement("div");
+r.innerHTML='<h2 style="font-family:Instrument Serif,serif;font-size:28px;font-weight:400;margin-bottom:4px">Market Intelligence</h2><p style="color:#9494b0;font-size:13px;margin-bottom:18px">Live niche analysis with Google Trends integration. Click any niche for 4-Fits reasoning, source articles, and real-time trend data.</p><div class="g4" style="margin-bottom:16px"><div class="cd st-c"><div class="st-n">$214B</div><div class="st-l">Creator Economy 2026</div></div><div class="cd st-c"><div class="st-n">$480B</div><div class="st-l">Projected 2027</div></div><div class="cd st-c"><div class="st-n">207M+</div><div class="st-l">Creators Worldwide</div></div><div class="cd st-c"><div class="st-n">12</div><div class="st-l">Niches Tracked</div></div></div>';
+// Live Google Trends section
+r.innerHTML+='<div class="cd" style="margin-bottom:18px"><h3 style="font-size:14px;font-weight:600;margin-bottom:10px">📈 Live Google Trends — Real-Time Market Pulse</h3><p style="font-size:12px;color:#9494b0;margin-bottom:12px">Click any niche to explore real-time search interest data on Google Trends.</p><div class="g2" style="gap:10px">'+N.slice(0,6).map(function(n){return'<a href="https://trends.google.com/trends/explore?date=today%2012-m&geo=US&q='+encodeURIComponent(n.kw[0])+','+encodeURIComponent(n.kw[1])+'" target="_blank" style="display:block;padding:12px 14px;background:rgba(0,229,160,.04);border:1px solid rgba(0,229,160,.1);border-radius:8px;color:#f2f2fa;text-decoration:none;transition:.2s"><div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:12px">'+n.name+'</b><span style="font-size:10px;color:#00e5a0">View Live Trends →</span></div><div style="font-size:10px;color:#9494b0;margin-top:4px">Tracking: '+n.kw.slice(0,3).join(", ")+'</div></a>'}).join("")+'</div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">'+N.slice(6).map(function(n){return'<a href="https://trends.google.com/trends/explore?date=today%2012-m&geo=US&q='+encodeURIComponent(n.kw[0])+','+encodeURIComponent(n.kw[1])+'" target="_blank" style="font-size:11px;padding:6px 12px;background:rgba(0,180,216,.06);border:1px solid rgba(0,180,216,.12);border-radius:6px;color:#00b4d8;text-decoration:none">'+n.name+' →</a>'}).join("")+'</div></div>';
+var g=document.createElement("div");g.className="g2";
+N.sort(function(a,b){return b.heat-a.heat}).forEach(function(n){var c=document.createElement("div");c.className="cd";c.style.cursor="pointer";
+c.innerHTML='<div style="display:flex;justify-content:space-between"><div style="flex:1"><div style="font-weight:600;font-size:14px;margin-bottom:3px">'+n.name+'</div><div style="display:flex;gap:12px;flex-wrap:wrap"><span style="font-size:11px;color:#9494b0">Market: <b style="color:#f2f2fa">'+n.rev+'</b></span><span style="font-size:11px;color:#9494b0">Growth: <b style="color:#00e5a0">'+n.growth+'</b></span><span style="font-size:11px;color:#9494b0">2029: <b style="color:#a78bfa">'+n.proj+'</b></span></div></div><div style="font-size:24px;font-weight:800;font-family:Instrument Serif,serif;color:'+(n.heat>92?"#00e5a0":n.heat>80?"#00b4d8":"#9494b0")+'">'+n.heat+'</div></div><div class="hbt"><div class="hb" style="width:'+n.heat+'%;background:'+(n.heat>92?"linear-gradient(135deg,#00e5a0,#00b4d8)":"#00b4d8")+'"></div></div><div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:8px">'+n.kw.map(function(k){return'<span class="tag">'+k+'</span>'}).join("")+'</div><div style="margin-top:8px;font-size:10px;color:#5c5c78">Click → 4-Fits analysis + articles + creators →</div>';
+c.onclick=function(){showNiche(n)};g.appendChild(c)});r.appendChild(g);return r;}
+
+// ═══════ OUTREACH (with Add Creator form + search) ═══════
+function rOut(){var r=document.createElement("div");
+r.innerHTML='<h2 style="font-family:Instrument Serif,serif;font-size:28px;font-weight:400;margin-bottom:4px">AI Outreach Engine</h2><p style="color:#9494b0;font-size:13px;margin-bottom:18px">IG-optimized DMs by Marc-Anthony Marcelin & Scaling Webinars. Multiple angles per creator. Add unlimited leads below. '+C.length+' creators loaded.</p>';
+// Add Creator Form (collapsible)
+var formWrap=document.createElement("div");
+formWrap.innerHTML='<div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap"><button class="btn bp" onclick="var f=document.getElementById(\'addForm\');f.style.display=f.style.display===\'none\'?\'block\':\'none\';document.getElementById(\'csvForm\').style.display=\'none\'">+ Add Creator</button><button class="btn bs" onclick="var f=document.getElementById(\'csvForm\');f.style.display=f.style.display===\'none\'?\'block\':\'none\';document.getElementById(\'addForm\').style.display=\'none\'">📄 Upload CSV</button></div><div id="addForm" class="frm" style="display:none"><div class="frm-row"><div><label>Name</label><input id="fName" placeholder="Creator name"></div><div><label>IG Handle</label><input id="fIg" placeholder="handle (no @)"></div></div><div class="frm-row"><div><label>Niche</label><select id="fNi">'+N.map(function(n){return'<option value="'+n.name+'">'+n.name+'</option>'}).join("")+'</select></div><div><label>Followers</label><input id="fFo" placeholder="e.g. 250K"></div></div><div class="frm-row"><div><label>Current Offer</label><input id="fOf" placeholder="e.g. No offer, Low Ticket, etc."></div><div><label>Score (1-100)</label><input id="fSc" type="number" value="75" min="1" max="100"></div></div><label>Opportunity Notes</label><textarea id="fOp" rows="2" placeholder="Why is this creator a good partner?"></textarea><button class="btn bp" onclick="addCreator()">Save Creator</button></div><div id="csvForm" class="frm" style="display:none"><h3 style="font-size:14px;font-weight:600;margin-bottom:8px">📄 Bulk Upload via CSV</h3><p style="font-size:12px;color:#9494b0;margin-bottom:12px;line-height:1.5">Upload a CSV file with your creators. The system will auto-detect columns by matching header names. Supported columns:<br><b style="color:#f2f2fa">name</b> (required), <b style="color:#f2f2fa">ig</b> or <b style="color:#f2f2fa">instagram</b>, <b style="color:#f2f2fa">niche</b>, <b style="color:#f2f2fa">followers</b>, <b style="color:#f2f2fa">offer</b>, <b style="color:#f2f2fa">score</b>, <b style="color:#f2f2fa">notes</b> or <b style="color:#f2f2fa">opportunity</b></p><div style="margin-bottom:10px"><button class="btn bs" style="font-size:11px" onclick="downloadTemplate()">⬇ Download CSV Template</button></div><input type="file" id="csvFile" accept=".csv,.txt" style="margin-bottom:10px;font-size:12px;color:#9494b0"><div id="csvPreview" style="display:none;margin-bottom:10px;max-height:200px;overflow-y:auto;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:10px;font-size:11px;color:#9494b0"></div><div id="csvActions" style="display:none;display:flex;gap:8px"><button class="btn bp" onclick="importCSV()">Import All</button><span id="csvCount" style="font-size:12px;color:#9494b0;display:flex;align-items:center"></span></div></div>';
+r.appendChild(formWrap);
+var p=document.createElement("div");p.className="op";
+var left=document.createElement("div");
+left.innerHTML='<div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#5c5c78;margin-bottom:6px">Creators ('+C.length+')</div><input class="search-box" placeholder="Search creators..." oninput="st.search=this.value;render()" value="'+(st.search||"")+'">';
+var list=document.createElement("div");list.className="cl";
+var filtered=C.filter(function(c){return !st.search||c.name.toLowerCase().indexOf(st.search.toLowerCase())>=0||c.ni.toLowerCase().indexOf(st.search.toLowerCase())>=0});
+filtered.forEach(function(c,i){var idx=C.indexOf(c);var ci=document.createElement("div");ci.className="ci"+(st.sel===idx?" sel":"");
+ci.innerHTML='<div class="av">'+c.name.charAt(0)+'</div><div><b style="font-size:12px;display:block">'+c.name+'</b><small style="font-size:10px;color:#9494b0">'+c.ni+' · '+c.fo+'</small></div>';
+ci.onclick=function(){st.sel=idx;render()};list.appendChild(ci)});
+left.appendChild(list);p.appendChild(left);
+var cr=C[st.sel]||C[0],right=document.createElement("div");
+right.innerHTML='<div style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px"><div><h3 style="font-size:15px;font-weight:600">'+cr.name+'</h3><p style="font-size:11px;color:#9494b0;margin-top:2px"><a href="https://www.instagram.com/'+cr.ig+'/" target="_blank" style="color:#a78bfa;text-decoration:none">@'+cr.ig+'</a> · '+cr.ni+' · '+cr.of+' · '+cr.fo+'</p></div><div style="display:flex;gap:6px;flex-shrink:0"><a href="https://www.instagram.com/'+cr.ig+'/" target="_blank" style="display:inline-flex;align-items:center;gap:5px;padding:6px 12px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);border-radius:6px;color:#fff;text-decoration:none;font-size:11px;font-weight:600">📸 IG Profile</a><button onclick="deleteCreator('+cr.id+')" style="padding:6px 12px;background:rgba(244,100,100,.1);border:1px solid rgba(244,100,100,.2);border-radius:6px;color:#f46464;font-size:11px;font-weight:600;font-family:Outfit,sans-serif;cursor:pointer">🗑 Remove</button></div></div>';
+var tb=document.createElement("div");tb.style.cssText="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap";
+[{k:"cold_dm",l:"💬 Cold DMs"},{k:"follow_ups",l:"🔄 Follow-Ups"},{k:"voice_notes",l:"🎙️ Voice Notes"},{k:"objections",l:"🛡️ Objections"},{k:"profile",l:"📊 Creator Profile"}].forEach(function(t){
+var b=document.createElement("button");b.style.cssText="padding:7px 12px;border:1px solid "+(st.dt===t.k?"#00e5a0":"rgba(255,255,255,.06)")+";background:"+(st.dt===t.k?"rgba(0,229,160,.12)":"transparent")+";color:"+(st.dt===t.k?"#00e5a0":"#9494b0")+";border-radius:7px;font-family:Outfit,sans-serif;font-size:11px;cursor:pointer";
+b.textContent=t.l;b.onclick=function(){st.dt=t.k;render()};tb.appendChild(b)});right.appendChild(tb);
+// PROFILE / 4-FITS VIEW
+if(st.dt==="profile"){
+var ni=N.find(function(x){return x.name===cr.ni});
+var pf=document.createElement("div");pf.style.cssText="max-height:440px;overflow-y:auto";
+var hasOffer=cr.of!=="No offer"&&cr.of!=="No/Low Ticket"&&cr.of!=="Unknown";
+var pfh='<div class="cd" style="margin-bottom:10px;border-color:rgba(0,229,160,.15)"><h4 style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#00e5a0;margin-bottom:5px">💰 Opportunity Summary</h4><p style="font-size:12.5px;line-height:1.6;color:#9494b0">'+cr.op+'</p></div>';
+if(cr.detail)pfh+='<div class="cd" style="margin-bottom:10px"><h4 style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#5c5c78;margin-bottom:5px">📋 Detailed Analysis</h4><p style="font-size:12.5px;line-height:1.6;color:#9494b0">'+cr.detail+'</p></div>';
+if(cr.next)pfh+='<div class="cd" style="margin-bottom:10px;border-color:rgba(0,229,160,.1)"><h4 style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#00e5a0;margin-bottom:5px">🎯 Recommended Next Steps</h4><p style="font-size:12.5px;line-height:1.6;color:#9494b0">'+cr.next+'</p></div>';
+// Niche articles
+if(ni&&ni.arts){pfh+='<h3 style="font-size:13px;font-weight:700;margin:14px 0 8px">📰 '+cr.ni+' Source Articles</h3>';
+ni.arts.forEach(function(a){pfh+='<a class="art" href="'+a.u+'" target="_blank"><strong>'+a.t+'</strong><em>'+a.s+'</em></a>';});}
+// ── AUDIENCE PSYCHOLOGY (Feature 1) ──
+var segs=getAudienceSegments(cr);
+pfh+='<h3 style="font-size:13px;font-weight:700;margin:14px 0 8px">🧠 Audience Psychology — Who Would Buy '+cr.name+'\'s Webinar?</h3>';
+pfh+='<p style="font-size:11px;color:#9494b0;margin-bottom:10px">These are the psychographic segments inside '+cr.name+'\'s audience. Understanding who they are, what keeps them up at night, and what they\'re willing to pay for is the foundation of everything — the offer, the webinar angle, the ad copy, and the DMs.</p>';
+segs.forEach(function(s){
+pfh+='<div class="fitc" style="border-color:'+(s.best?'rgba(0,229,160,.2)':'rgba(255,255,255,.06)')+'"><h4 style="color:'+(s.best?'#00e5a0':'#f2f2fa')+'">'+(s.best?'⭐ ':'')+''+s.name+(s.best?' — BEST BUYER':'')+'</h4>';
+pfh+='<p><b style="color:#f2f2fa">Core pain:</b> '+s.pain+'<br><br>';
+pfh+='<b style="color:#f2f2fa">What they want:</b> '+s.desire+'<br><br>';
+pfh+='<b style="color:#f2f2fa">Buying behavior:</b> '+s.buys+'</p></div>';});
+// ── BEST BUYER RECOMMENDATION (Feature 7) ──
+var bestBuyer=segs.find(function(s){return s.best})||segs[0];
+pfh+='<div class="cd" style="margin:10px 0;border-color:rgba(0,229,160,.2);background:rgba(0,229,160,.03)"><h4 style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#00e5a0;margin-bottom:5px">🎯 Best Buyer Recommendation</h4>';
+pfh+='<p style="font-size:12.5px;line-height:1.6;color:#9494b0">For '+cr.name+', we should build the webinar targeting <b style="color:#00e5a0">'+bestBuyer.name+'</b> first.<br><br>';
+pfh+='<b style="color:#f2f2fa">Why this segment:</b> They have the highest combination of urgency (pain), willingness to pay, and alignment with what '+cr.name+' already teaches. The webinar messaging should speak directly to their pain: "'+bestBuyer.pain.split(".")[0]+'." The offer should promise what they desire most: "'+bestBuyer.desire.split(".")[0]+'."<br><br>';
+pfh+='<b style="color:#f2f2fa">Pricing sweet spot:</b> '+bestBuyer.buys.split(".")[0]+'.<br><br>';
+pfh+='<b style="color:#f2f2fa">Expansion path:</b> After the webinar is converting with this segment, we expand to the other audience segments by creating new ad angles and webinar variations that speak to their specific pains.</p></div>';
+// ── CREATOR MOAT (Feature 5) ──
+var moats=getCreatorMoat(cr);
+pfh+='<h3 style="font-size:13px;font-weight:700;margin:14px 0 8px">🏰 Defensible Edge — What Makes '+cr.name+' Un-Copyable</h3>';
+pfh+='<p style="font-size:11px;color:#9494b0;margin-bottom:10px">These are the things competitors can\'t replicate. The webinar and offer should be built around these advantages.</p>';
+moats.forEach(function(m){pfh+='<div class="fitc"><h4>'+m.type+'</h4><p>'+m.desc+'</p></div>';});
+// AI buttons
+pfh+='<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">';
+pfh+='<button class="btn bp" onclick="askAI(\'As Marc from Scaling Webinars, draft me a compelling Instagram DM for '+cr.name.replace(/'/g,"")+" (@"+cr.ig+") in the "+cr.ni.replace(/'/g,"")+" niche with "+cr.fo+" followers. Current offer: "+cr.of.replace(/'/g,"")+". Reference our results ($10M+ generated, $996K in 200 days for a client). Opportunity: "+cr.op.replace(/'/g,"").replace(/\n/g," ")+"')\">🤖 Draft DM as Marc</button>";
+pfh+='<button class="btn bs" onclick="askAI(\'Using the Scaling Webinars system (mid-ticket frontend webinar that covers ad spend + high-ticket backend upsell), what specific webinar offer would you recommend building for '+cr.name.replace(/'/g,"")+" based on their "+cr.ni.replace(/'/g,"")+" niche, "+cr.fo+" followers, and current offer of "+cr.of.replace(/'/g,"")+"? Give me the exact offer structure, pricing, webinar topic, and backend upsell.')\">🎯 AI: Webinar Offer Strategy</button></div>";
+pf.innerHTML=pfh;right.appendChild(pf);
+}else{
+// DM MESSAGES VIEW — AI-powered personalized generation
+var ct=document.createElement("div");ct.style.cssText="max-height:440px;overflow-y:auto";
+var cacheKey="dm_cache_"+cr.id+"_"+st.dt;
+var cached=window._dmCache&&window._dmCache[cacheKey];
+
+// Show static templates as fallback + generate button
+var dms=gDM(cr),msgs=dms[st.dt]||[];
+
+// AI Rewrite button at top
+var genDiv=document.createElement("div");genDiv.style.cssText="margin-bottom:12px;display:flex;justify-content:flex-end";
+genDiv.innerHTML='<button class="btn bs" id="genDmBtn" onclick="generatePersonalizedDMs()" style="font-size:11px;background:rgba(167,139,250,.08);border-color:rgba(167,139,250,.15);color:#a78bfa">✨ AI Rewrite All for '+cr.name+'</button>';
+ct.appendChild(genDiv);
+
+var cacheKey="dm_cache_"+cr.id+"_"+st.dt;
+var cached=window._dmCache&&window._dmCache[cacheKey];
+
+if(cached){
+cached.forEach(function(m,i){
+var ag=document.createElement("div");ag.className="ang";
+ag.innerHTML='<div style="display:flex;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:4px"><b style="font-size:12px;color:#a78bfa">'+m.a+'</b><span style="font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(0,229,160,.1);color:#00e5a0">AI Personalized</span></div>';
+ag.innerHTML+='<div style="margin-bottom:6px"><span style="font-size:9px;color:#5c5c78;text-transform:uppercase;letter-spacing:1px">Hook (editable)</span><textarea class="ahk" style="width:100%;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:8px;color:#f2f2fa;font-size:12.5px;font-family:Outfit,sans-serif;resize:vertical;box-sizing:border-box;min-height:36px" id="aiHook'+i+'">'+m.h.replace(/</g,"&lt;")+'</textarea></div>';
+ag.innerHTML+='<div><span style="font-size:9px;color:#5c5c78;text-transform:uppercase;letter-spacing:1px">Message (editable)</span><textarea class="abdy" style="width:100%;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:8px;color:#9494b0;font-size:12px;font-family:Outfit,sans-serif;resize:vertical;box-sizing:border-box;min-height:100px;line-height:1.6" id="aiBody'+i+'">'+m.b.replace(/</g,"&lt;")+'</textarea></div>';
+var btns=document.createElement("div");btns.style.cssText="display:flex;gap:6px;margin-top:10px";
+var b1=document.createElement("button");b1.className="btn bp";b1.textContent="📋 Copy Full";b1.dataset.idx=i;
+b1.onclick=function(){var idx=this.dataset.idx;var h=document.getElementById("aiHook"+idx).value;var b=document.getElementById("aiBody"+idx).value;cp(h+"\n\n"+b,this)};
+var b2=document.createElement("button");b2.className="btn bs";b2.textContent="Copy Hook";b2.dataset.idx=i;
+b2.onclick=function(){var idx=this.dataset.idx;cp(document.getElementById("aiHook"+idx).value,this)};
+var b3=document.createElement("button");b3.className="btn bs";b3.style.cssText="background:rgba(167,139,250,.1);border-color:rgba(167,139,250,.2);color:#a78bfa";b3.textContent="🤖 Refine";b3.dataset.idx=i;
+b3.onclick=function(){var idx=this.dataset.idx;var crr=C[st.sel];askAI("Refine this DM for "+crr.name+" (@"+crr.ig+"). Profile: "+(crr.detail||"N/A")+". Opportunity: "+(crr.op||"N/A")+". Make it more personal.\n\nHook: "+document.getElementById("aiHook"+idx).value+"\n\nBody: "+document.getElementById("aiBody"+idx).value)};
+btns.appendChild(b1);btns.appendChild(b2);btns.appendChild(b3);ag.appendChild(btns);ct.appendChild(ag)});
+}else{
+msgs.forEach(function(m){var ag=document.createElement("div");ag.className="ang";
+ag.innerHTML='<div style="display:flex;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:4px"><b style="font-size:12px;color:#00e5a0">'+m.a+'</b><span style="font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(167,139,250,.1);color:#a78bfa">'+m.t+'</span></div><div class="ahk">'+m.h+'</div><div class="abdy">'+m.b.replace(/\n/g,"<br>")+'</div>';
+var btns=document.createElement("div");btns.style.cssText="display:flex;gap:6px;margin-top:10px";
+var b1=document.createElement("button");b1.className="btn bp";b1.textContent="📋 Copy Full";b1.onclick=function(){cp(m.h+"\n\n"+m.b,b1)};
+var b2=document.createElement("button");b2.className="btn bs";b2.textContent="Copy Hook";b2.onclick=function(){cp(m.h,b2)};
+var b3=document.createElement("button");b3.className="btn bs";b3.style.cssText="background:rgba(167,139,250,.1);border-color:rgba(167,139,250,.2);color:#a78bfa";b3.textContent="🤖 Refine with AI";
+b3.onclick=function(){var crr=C[st.sel];askAI("Here is a DM for "+crr.name+" (@"+crr.ig+", "+crr.ni+", "+crr.fo+" followers, offer: "+crr.of+"). Profile: "+(crr.detail||"N/A")+". Opportunity: "+(crr.op||"N/A")+". Refine this message to be more personal to "+crr.name+":\n\nHook: "+m.h+"\n\nBody: "+m.b)};
+btns.appendChild(b1);btns.appendChild(b2);btns.appendChild(b3);ag.appendChild(btns);ct.appendChild(ag)});
+}
+// ── NICHE-SPECIFIC REFRAMES (Feature 3) — only show on objections tab ──
+if(st.dt==="objections"){
+var reframes=getNicheReframes(cr.ni);
+if(reframes.length){
+var rfDiv=document.createElement("div");rfDiv.style.cssText="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.06)";
+rfDiv.innerHTML='<h4 style="font-size:12px;font-weight:600;color:#a78bfa;margin-bottom:10px">🔄 '+cr.ni+' — Common Misconceptions & How to Flip Them</h4><p style="font-size:11px;color:#5c5c78;margin-bottom:10px">These are objections specific to the '+cr.ni.toLowerCase()+' niche. Use these reframes when a creator pushes back with industry-specific concerns.</p>';
+reframes.forEach(function(rf){
+rfDiv.innerHTML+='<div class="ang" style="margin-bottom:8px"><div style="margin-bottom:6px"><span style="font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(244,162,97,.1);color:#f4a261">MYTH</span> <span style="font-size:12px;color:#f2f2fa">'+rf.myth+'</span></div><div style="margin-bottom:6px"><span style="font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(0,229,160,.1);color:#00e5a0">REFRAME</span> <span style="font-size:12px;color:#9494b0">'+rf.flip+'</span></div></div>';});
+ct.appendChild(rfDiv);}}
+right.appendChild(ct);
+}
+p.appendChild(right);r.appendChild(p);return r;}
+
+function addCreator(){
+var name=document.getElementById("fName").value.trim();if(!name){alert("Enter a name");return}
+var newC={id:nextId,name:name,ni:document.getElementById("fNi").value,ig:document.getElementById("fIg").value.trim()||name.toLowerCase().replace(/\s/g,""),fo:document.getElementById("fFo").value.trim()||"Unknown",of:document.getElementById("fOf").value.trim()||"Unknown",st:"new",sc:parseInt(document.getElementById("fSc").value)||75,op:document.getElementById("fOp").value.trim()||"New lead — needs research.",detail:"",next:""};
+C.push(newC);nextId++;saveCreators();
+document.getElementById("fName").value="";document.getElementById("fIg").value="";document.getElementById("fFo").value="";document.getElementById("fOf").value="";document.getElementById("fOp").value="";
+document.getElementById("addForm").style.display="none";render();}
+
+function deleteCreator(id){
+var cr=C.find(function(c){return c.id===id});
+if(!cr)return;
+if(!confirm("Remove "+cr.name+" (@"+cr.ig+") from Creator Scout?\n\nThis will also delete their message history.")){return}
+C=C.filter(function(c){return c.id!==id});
+delete window._msgLog[id];
+if(st.sel>=C.length)st.sel=Math.max(0,C.length-1);
+saveCreators();
+saveMsgs();
+document.getElementById("mr").innerHTML="";
+render();
+}
+
+function addDiscovered(idx,niche){
+var cached=window._scoutCache[niche];
+if(!cached||!cached[idx])return;
+var d=cached[idx];
+var exists=C.some(function(c){return c.ig.toLowerCase()===d.ig.toLowerCase()||c.name.toLowerCase()===d.name.toLowerCase()});
+if(exists){alert(d.name+" is already in your pipeline.");return}
+C.push({id:nextId,name:d.name,ni:d.ni||niche,ig:d.ig,fo:d.fo||"Unknown",of:d.of||"Unknown",st:"new",sc:d.sc||75,op:d.op||"AI-discovered creator.",detail:d.about||"",next:""});
+nextId++;saveCreators();render();
+}
+
+function addAllDiscovered(niche){
+var cached=window._scoutCache[niche];
+if(!cached||!cached.length)return;
+var added=0,skipped=0;
+cached.forEach(function(d){
+var exists=C.some(function(c){return c.ig.toLowerCase()===d.ig.toLowerCase()||c.name.toLowerCase()===d.name.toLowerCase()});
+if(exists){skipped++;return}
+C.push({id:nextId,name:d.name,ni:d.ni||niche,ig:d.ig,fo:d.fo||"Unknown",of:d.of||"Unknown",st:"new",sc:d.sc||75,op:d.op||"AI-discovered creator.",detail:d.about||"",next:""});
+nextId++;added++;
+});
+saveCreators();render();
+alert("Added "+added+" creators to pipeline!"+(skipped?" ("+skipped+" already existed)":""));
+}
+
+// CSV FUNCTIONS
+var csvRows=[];
+window.downloadTemplate=function(){
+var tpl="name,ig,niche,followers,offer,score,notes\nJohn Smith,johnsmith,Health & Wellness,150K,No offer,80,Great engagement in gut health niche\nJane Doe,janedoe,AI & Automation,200K,Low Ticket,85,AI tutorials with professional audience\n";
+var blob=new Blob([tpl],{type:"text/csv"});var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="creator_scout_template.csv";a.click();};
+
+function parseCSV(text){
+var lines=text.split(/\r?\n/).filter(function(l){return l.trim()});
+if(lines.length<2)return[];
+// Parse header
+var hdr=parseCSVLine(lines[0]).map(function(h){return h.toLowerCase().trim()});
+var nameIdx=-1,igIdx=-1,niIdx=-1,foIdx=-1,ofIdx=-1,scIdx=-1,notesIdx=-1;
+hdr.forEach(function(h,i){
+if(h==="name"||h==="creator"||h==="creator name")nameIdx=i;
+else if(h==="ig"||h==="instagram"||h==="ig handle"||h==="handle"||h==="ig url"||h==="instagram url")igIdx=i;
+else if(h==="niche"||h==="industry"||h==="category")niIdx=i;
+else if(h==="followers"||h==="foll"||h==="follower count")foIdx=i;
+else if(h==="offer"||h==="current offer"||h==="offer type")ofIdx=i;
+else if(h==="score"||h==="scout score")scIdx=i;
+else if(h==="notes"||h==="opportunity"||h==="opp"||h==="response notes")notesIdx=i;
+});
+if(nameIdx===-1){
+// Try first column as name
+nameIdx=0;if(igIdx===-1&&hdr.length>1)igIdx=1;
+}
+var rows=[];
+for(var i=1;i<lines.length;i++){
+var cols=parseCSVLine(lines[i]);
+var name=cols[nameIdx]?cols[nameIdx].trim():"";
+if(!name)continue;
+var ig=igIdx>=0&&cols[igIdx]?cols[igIdx].trim():"";
+// Extract handle from URL if needed
+if(ig.indexOf("instagram.com")>=0){var m=ig.match(/instagram\.com\/([^\/\?#]+)/);if(m)ig=m[1];}
+ig=ig.replace(/^@/,"").replace(/\/.*$/,"").trim();
+if(!ig)ig=name.toLowerCase().replace(/[^a-z0-9._]/g,"");
+var ni=niIdx>=0&&cols[niIdx]?matchNiche(cols[niIdx].trim()):"Online Business";
+var fo=foIdx>=0&&cols[foIdx]?cols[foIdx].trim():"Unknown";
+var of_=ofIdx>=0&&cols[ofIdx]?cols[ofIdx].trim():"Unknown";
+var sc=scIdx>=0&&cols[scIdx]?parseInt(cols[scIdx])||75:75;
+var notes=notesIdx>=0&&cols[notesIdx]?cols[notesIdx].trim():"Imported from CSV — needs research.";
+rows.push({name:name,ig:ig,ni:ni,fo:fo,of:of_,sc:sc,notes:notes});
+}
+return rows;
+}
+
+function parseCSVLine(line){
+var result=[],current="",inQuotes=false;
+for(var i=0;i<line.length;i++){
+var ch=line[i];
+if(ch==='"'){if(inQuotes&&line[i+1]==='"'){current+='"';i++}else{inQuotes=!inQuotes}}
+else if(ch===","&&!inQuotes){result.push(current);current=""}
+else{current+=ch}
+}
+result.push(current);return result;
+}
+
+function matchNiche(text){
+var t=text.toLowerCase();
+var best="Online Business",bestScore=0;
+N.forEach(function(n){
+var words=n.name.toLowerCase().split(/[\s&]+/);
+var score=0;
+words.forEach(function(w){if(w.length>2&&t.indexOf(w)>=0)score++});
+if(t.indexOf(n.name.toLowerCase())>=0)score+=10;
+if(score>bestScore){bestScore=score;best=n.name;}
+});
+return best;
+}
+
+// File change handler - set up after render
+function setupCSVHandler(){
+var fileInput=document.getElementById("csvFile");
+if(!fileInput||fileInput._bound)return;
+fileInput._bound=true;
+fileInput.addEventListener("change",function(e){
+var file=e.target.files[0];if(!file)return;
+var reader=new FileReader();
+reader.onload=function(ev){
+csvRows=parseCSV(ev.target.result);
+var preview=document.getElementById("csvPreview");
+var actions=document.getElementById("csvActions");
+var count=document.getElementById("csvCount");
+if(csvRows.length===0){
+preview.style.display="block";preview.innerHTML='<span style="color:#ef4444">No valid rows found. Make sure your CSV has a header row with at least a "name" column.</span>';
+actions.style.display="none";return;}
+preview.style.display="block";
+var ph='<div style="margin-bottom:6px;color:#00e5a0;font-weight:600">'+csvRows.length+' creators found:</div><table style="width:100%;border-collapse:collapse;font-size:10px"><tr style="border-bottom:1px solid rgba(255,255,255,.1)"><th style="text-align:left;padding:4px;color:#f2f2fa">Name</th><th style="text-align:left;padding:4px;color:#f2f2fa">IG</th><th style="text-align:left;padding:4px;color:#f2f2fa">Niche</th><th style="text-align:left;padding:4px;color:#f2f2fa">Followers</th><th style="text-align:left;padding:4px;color:#f2f2fa">Offer</th></tr>';
+csvRows.slice(0,20).forEach(function(r){
+ph+='<tr style="border-bottom:1px solid rgba(255,255,255,.04)"><td style="padding:4px">'+r.name+'</td><td style="padding:4px;color:#a78bfa">@'+r.ig+'</td><td style="padding:4px">'+r.ni+'</td><td style="padding:4px">'+r.fo+'</td><td style="padding:4px">'+r.of+'</td></tr>';});
+if(csvRows.length>20)ph+='<tr><td colspan="5" style="padding:4px;color:#5c5c78">...and '+(csvRows.length-20)+' more</td></tr>';
+ph+='</table>';preview.innerHTML=ph;
+actions.style.display="flex";count.textContent=csvRows.length+" creators ready to import";
+};reader.readAsText(file);});
+}
+
+window.importCSV=function(){
+if(!csvRows.length)return;
+var dupes=0;
+csvRows.forEach(function(r){
+var exists=C.some(function(c){return c.name.toLowerCase()===r.name.toLowerCase()});
+if(exists){dupes++;return;}
+C.push({id:nextId,name:r.name,ni:r.ni,ig:r.ig,fo:r.fo,of:r.of,st:"new",sc:r.sc,op:r.notes,detail:"",next:""});
+nextId++;
+});
+saveCreators();
+var imported=csvRows.length-dupes;
+csvRows=[];
+alert("Imported "+imported+" creators!"+(dupes?" ("+dupes+" duplicates skipped)":""));
+render();};
+
+// ═══════ PIPELINE (drag and drop + message tracking) ═══════
+var dragId=null;
+// Message history — persisted via localStorage
+function getMsgLog(){return window._msgLog||{}}
+function saveMsgLog(log){saveMsgs();}
+function logMsg(cid,type,text){
+if(!window._msgLog[cid])window._msgLog[cid]=[];
+window._msgLog[cid].push({type:type,text:text,date:new Date().toLocaleDateString(),ts:Date.now(),replied:false});
+saveMsgs();
+}
+function toggleReply(cid,idx){
+if(window._msgLog[cid]&&window._msgLog[cid][idx]){
+window._msgLog[cid][idx].replied=!window._msgLog[cid][idx].replied;
+saveMsgs();
+}
+render();
+}
+// Helper: convert message data to array for a creator
+function getMsgs(cid){
+var raw=window._msgLog[cid];
+if(!raw)return[];
+if(Array.isArray(raw))return raw;
+return Object.keys(raw).map(function(k){return raw[k]});
+}
+
+function rPipe(){var r=document.createElement("div");
+var ct=C.filter(function(c){return["messaged","followed_up","responded"].indexOf(c.st)>=0}).length;
+var replied=C.filter(function(c){return c.st==="responded"}).length;
+var waiting=C.filter(function(c){return c.st==="messaged"||c.st==="followed_up"}).length;
+r.innerHTML='<h2 style="font-family:Instrument Serif,serif;font-size:28px;font-weight:400;margin-bottom:4px">Pipeline Tracker</h2><p style="color:#9494b0;font-size:13px;margin-bottom:18px">Drag and drop creators between stages. Click any card to see message history and track responses.</p><div class="g4" style="margin-bottom:16px"><div class="cd st-c"><div class="st-n">'+C.length+'</div><div class="st-l">Pipeline</div></div><div class="cd st-c"><div class="st-n">'+ct+'</div><div class="st-l">Contacted</div></div><div class="cd st-c"><div class="st-n">'+replied+'</div><div class="st-l">Replied</div></div><div class="cd st-c"><div class="st-n">'+waiting+'</div><div class="st-l">Waiting</div></div></div>';
+var bd=document.createElement("div");bd.className="pb";
+STAGES.forEach(function(stg){
+var col=document.createElement("div");col.className="pcol";var s=S[stg];
+var items=C.filter(function(c){return c.st===stg});
+col.innerHTML='<div class="pcol-h"><b style="color:'+s.c+'">'+s.l+'</b><span class="pcnt">'+items.length+'</span></div>';
+var drop=document.createElement("div");drop.className="pdrop";drop.dataset.stage=stg;
+drop.ondragover=function(e){e.preventDefault();drop.classList.add("over")};
+drop.ondragleave=function(){drop.classList.remove("over")};
+drop.ondrop=function(e){e.preventDefault();drop.classList.remove("over");if(dragId!==null){var cr=C.find(function(c){return c.id===dragId});if(cr){cr.st=stg;saveCreators();render();}}};
+items.forEach(function(c){
+var card=document.createElement("div");card.className="pcard";card.draggable=true;card.dataset.id=c.id;
+card.ondragstart=function(e){dragId=c.id;card.classList.add("dragging");e.dataTransfer.effectAllowed="move"};
+card.ondragend=function(){card.classList.remove("dragging");dragId=null};
+var log=getMsgs(c.id);
+var lastMsg=log.length?log[log.length-1]:null;
+var hasReply=log.some(function(m){return m.replied});
+// Card content
+var ch='<b>'+c.name+'</b><small>'+c.ni+' · '+c.fo+'</small>';
+ch+='<div style="margin-top:5px;display:flex;gap:4px;flex-wrap:wrap"><span class="tag" style="font-size:9px">'+c.of+'</span><span class="tag" style="font-size:9px">Score: '+c.sc+'</span>';
+if(log.length)ch+='<span class="tag" style="font-size:9px;border-color:rgba(0,180,216,.2);color:#00b4d8">'+log.length+' msg'+(log.length>1?"s":"")+'</span>';
+if(hasReply)ch+='<span class="tag" style="font-size:9px;border-color:rgba(0,229,160,.2);color:#00e5a0">✓ Replied</span>';
+else if(log.length)ch+='<span class="tag" style="font-size:9px;border-color:rgba(244,162,97,.2);color:#f4a261">Waiting</span>';
+ch+='</div>';
+if(lastMsg){ch+='<div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,.04);font-size:10px;color:#5c5c78">Last: <span style="color:#9494b0">'+lastMsg.type+'</span> · '+lastMsg.date+'</div>';}
+ch+='<div style="margin-top:6px;text-align:right"><button onclick="event.stopPropagation();deleteCreator('+c.id+')" style="background:none;border:none;color:#5c5c78;font-size:10px;cursor:pointer;padding:2px 4px;font-family:Outfit,sans-serif" onmouseover="this.style.color=\'#f46464\'" onmouseout="this.style.color=\'#5c5c78\'">🗑 Remove</button></div>';
+card.innerHTML=ch;
+card.onclick=function(){showPipelineDetail(c)};
+drop.appendChild(card)});
+if(!items.length){drop.innerHTML='<div style="padding:20px;text-align:center;color:#5c5c78;font-size:11px">Drag creators here</div>';}
+col.appendChild(drop);bd.appendChild(col)});
+r.appendChild(bd);return r;}
+
+function showPipelineDetail(c){
+var mr=document.getElementById("mr"),ni=N.find(function(x){return x.name===c.ni}),s=S[c.st]||S.new;
+var log=getMsgs(c.id);
+var h='<div class="mbg" onclick="document.getElementById(\'mr\').innerHTML=\'\'"><div class="mdl" onclick="event.stopPropagation()"><button class="mx" onclick="document.getElementById(\'mr\').innerHTML=\'\'">✕</button>';
+h+='<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px"><div class="sc-ring">'+c.sc+'</div><div><h2 style="font-family:Instrument Serif,serif;font-size:22px">'+c.name+'</h2><p style="font-size:12px;color:#9494b0"><a href="https://www.instagram.com/'+c.ig+'/" target="_blank" style="color:#a78bfa;text-decoration:none">@'+c.ig+'</a> · '+c.ni+' · '+c.fo+' · <span style="color:'+s.c+'">'+s.l+'</span></p></div></div>';
+// Quick stats
+h+='<div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap"><div class="cd st-c" style="flex:1;min-width:80px"><div class="st-n" style="font-size:16px">'+log.length+'</div><div class="st-l">Messages Sent</div></div><div class="cd st-c" style="flex:1;min-width:80px"><div class="st-n" style="font-size:16px;color:'+(log.some(function(m){return m.replied})?'#00e5a0':'#f4a261')+'">'+log.filter(function(m){return m.replied}).length+'</div><div class="st-l">Replied</div></div><div class="cd st-c" style="flex:1;min-width:80px"><div class="st-n" style="font-size:16px">'+log.filter(function(m){return !m.replied}).length+'</div><div class="st-l">No Answer</div></div></div>';
+// Message history
+h+='<h3 style="font-size:13px;font-weight:700;margin-bottom:10px">📨 Message History</h3>';
+if(log.length){
+log.forEach(function(m,i){
+h+='<div class="cd" style="margin-bottom:8px;border-color:'+(m.replied?'rgba(0,229,160,.15)':'rgba(244,162,97,.15)')+'"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><div><span style="font-size:10px;padding:2px 8px;border-radius:4px;background:'+(m.type==="Cold DM"?"rgba(0,180,216,.1)":"rgba(167,139,250,.1)")+';color:'+(m.type==="Cold DM"?"#00b4d8":"#a78bfa")+'">'+m.type+'</span> <span style="font-size:10px;color:#5c5c78">'+m.date+'</span></div><button class="btn '+(m.replied?'bp':'bs')+'" style="font-size:10px;padding:4px 10px" onclick="event.stopPropagation();toggleReply('+c.id+','+i+')">'+( m.replied?'✓ Replied':'Mark as Replied')+'</button></div>';
+h+='<div style="font-size:12px;color:#9494b0;line-height:1.6;white-space:pre-wrap;max-height:120px;overflow-y:auto">'+m.text.replace(/</g,"&lt;").replace(/>/g,"&gt;")+'</div></div>';});
+}else{
+h+='<div class="cd" style="text-align:center;padding:20px"><p style="font-size:12px;color:#5c5c78;margin-bottom:10px">No messages logged yet. Send a DM from the Outreach tab, or log one below.</p></div>';}
+// Log a message form
+h+='<div style="margin-top:10px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06)">';
+h+='<h4 style="font-size:11px;font-weight:600;color:#5c5c78;margin-bottom:8px">📝 Log a Message</h4>';
+h+='<div style="display:flex;gap:6px;margin-bottom:8px"><select id="logType" style="padding:6px 10px;background:var(--b2);border:1px solid var(--bd);border-radius:6px;color:#f2f2fa;font-size:11px;font-family:Outfit,sans-serif"><option>Cold DM</option><option>Follow-Up #1</option><option>Follow-Up #2</option><option>Follow-Up #3</option><option>Voice Note</option><option>Loom Video</option><option>Other</option></select></div>';
+h+='<textarea id="logText" rows="3" style="width:100%;padding:8px 10px;background:var(--b2);border:1px solid var(--bd);border-radius:6px;color:#f2f2fa;font-size:12px;font-family:Outfit,sans-serif;resize:vertical;box-sizing:border-box" placeholder="Paste the message you sent..."></textarea>';
+h+='<button class="btn bp" style="margin-top:6px" onclick="event.stopPropagation();var t=document.getElementById(\'logType\').value;var txt=document.getElementById(\'logText\').value.trim();if(txt){logMsg('+c.id+',t,txt);document.getElementById(\'mr\').innerHTML=\'\';showPipelineDetail(C.find(function(x){return x.id==='+c.id+'}))}else{alert(\'Enter a message\')}">Save to Log</button>';
+h+='</div>';
+// Quick actions
+h+='<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06)">';
+h+='<a href="https://www.instagram.com/'+c.ig+'/" target="_blank" style="display:inline-flex;align-items:center;gap:5px;padding:6px 12px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);border-radius:6px;color:#fff;text-decoration:none;font-size:11px;font-weight:600">📸 Open IG</a>';
+h+='<button class="btn bs" onclick="event.stopPropagation();document.getElementById(\'mr\').innerHTML=\'\';st.tab=\'outreach\';st.sel=C.indexOf(C.find(function(x){return x.id==='+c.id+'}));st.dt=\'cold_dm\';render()">💬 Go to Outreach</button>';
+h+='<button class="btn bs" onclick="event.stopPropagation();document.getElementById(\'mr\').innerHTML=\'\';showCreator(C.find(function(x){return x.id==='+c.id+'}))" style="background:rgba(167,139,250,.1);border-color:rgba(167,139,250,.2);color:#a78bfa">📊 Full Profile</button>';
+h+='</div>';
+h+='</div></div>';mr.innerHTML=h;}
+
+// ═══════ AI SCOUT (discovery engine + niche drill-down) ═══════
+function rScout(){var r=document.createElement("div");
+r.innerHTML='<h2 style="font-family:Instrument Serif,serif;font-size:28px;font-weight:400;margin-bottom:4px">Scouting — Creator Discovery</h2><p style="color:#9494b0;font-size:13px;margin-bottom:18px">Discover new creators in any niche using AI. Click a niche, then hit Discover to find creators you haven\'t reached out to yet.</p>';
+// Insights
+r.innerHTML+='<h3 style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#5c5c78;margin-bottom:10px">🧠 Insights</h3><div class="g2" style="margin-bottom:18px"><div class="cd"><b style="font-size:13px;display:block;margin-bottom:3px">🤖 AI = #1 in 2026</b><p style="font-size:12px;color:#9494b0;line-height:1.4">+64% growth. $2.52T spending. Cooperson, Lieu, Brody weakly monetized.</p></div><div class="cd"><b style="font-size:13px;display:block;margin-bottom:3px">💊 Health Undermonetized</b><p style="font-size:12px;color:#9494b0;line-height:1.4">$6.8T economy. Brecka 4.2M, Pelz 1.8M, Peterson 1.1M need HT backends.</p></div><div class="cd"><b style="font-size:13px;display:block;margin-bottom:3px">📊 No-Offer = Easy Close</b><p style="font-size:12px;color:#9494b0;line-height:1.4">'+C.filter(function(c){return c.of==="No offer"||c.of==="No/Low Ticket"}).length+' creators with zero/low monetization. Build from scratch.</p></div><div class="cd"><b style="font-size:13px;display:block;margin-bottom:3px">🔮 $480B by 2027</b><p style="font-size:12px;color:#9494b0;line-height:1.4">Certs, AI courses, community models = future HT plays.</p></div></div>';
+// Niche buttons
+r.innerHTML+='<h3 style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#5c5c78;margin-bottom:10px">🔍 Select a Niche to Scout</h3>';
+var ng=document.createElement("div");ng.className="g3";ng.style.marginBottom="18px";
+N.forEach(function(n){var btn=document.createElement("button");btn.className="ni-btn"+(st.scNi===n.name?" sel":"");
+btn.innerHTML='<div><b style="font-size:12px">'+n.name+'</b><br><small style="font-size:10px;color:#9494b0">'+C.filter(function(c){return c.ni===n.name}).length+' in pipeline · '+n.growth+'</small></div><span style="font-size:18px;font-weight:800;font-family:Instrument Serif,serif;color:'+(n.heat>92?"#00e5a0":"#00b4d8")+'">'+n.heat+'</span>';
+btn.onclick=function(){st.scNi=st.scNi===n.name?null:n.name;render()};ng.appendChild(btn)});
+r.appendChild(ng);
+// Niche detail + discovery
+if(st.scNi){var ni=N.find(function(x){return x.name===st.scNi});
+if(ni){var det=document.createElement("div");det.className="cd";det.style.marginBottom="18px";
+var dh='<h3 style="font-size:15px;font-weight:600;margin-bottom:6px">'+ni.name+'</h3><p style="font-size:12px;color:#9494b0;line-height:1.5;margin-bottom:10px">'+ni.ins+'</p>';
+// Discover button
+dh+='<div style="display:flex;gap:8px;align-items:center;margin-bottom:14px;flex-wrap:wrap"><button class="btn bp" onclick="discoverCreators(\''+ni.name.replace(/'/g,"\\'")+'\')">🔍 Discover New Creators in '+ni.name+'</button>';
+var cached=window._scoutCache[ni.name];
+if(cached==="loading")dh+='<span style="font-size:12px;color:#a78bfa">⏳ Searching...</span>';
+else if(cached&&cached!=="error")dh+='<span style="font-size:12px;color:#00e5a0">✓ '+cached.length+' creators found — click Discover to refresh</span>';
+dh+='</div>';
+// Show existing pipeline creators
+var ncs=C.filter(function(c){return c.ni===st.scNi}).sort(function(a,b){return b.sc-a.sc});
+if(ncs.length){dh+='<h4 style="font-size:11px;font-weight:700;margin:8px 0 6px">👤 Already in Pipeline ('+ncs.length+')</h4>';
+ncs.forEach(function(c){dh+='<div style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:10px;margin-bottom:5px;cursor:pointer" onclick="showCreator(C.find(function(x){return x.id==='+c.id+'}))">';
+dh+='<div style="display:flex;justify-content:space-between;align-items:center"><div><b style="font-size:12px">'+c.name+'</b> <small style="color:#9494b0">@'+c.ig+' · '+c.fo+'</small></div><div class="sc-ring" style="width:32px;height:32px;font-size:11px">'+c.sc+'</div></div>';
+dh+='<p style="font-size:11px;color:#9494b0;margin-top:4px">'+c.op+'</p></div>';});}
+// Show AI-discovered creators
+if(cached&&cached!=="loading"&&cached!=="error"&&cached.length){
+dh+='<h4 style="font-size:11px;font-weight:700;margin:14px 0 6px;color:#a78bfa">🤖 AI-Discovered Creators ('+cached.length+')</h4>';
+dh+='<p style="font-size:10px;color:#5c5c78;margin-bottom:8px">Real creators found by AI. Click their profile to verify, then add to your pipeline to start outreach.</p>';
+dh+='<div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap"><button class="btn bs" style="font-size:10px" onclick="addAllDiscovered(\''+st.scNi.replace(/'/g,"\\'")+'\')">+ Add All to Pipeline</button><button class="btn bs" style="font-size:10px" onclick="discoverCreators(\''+st.scNi.replace(/'/g,"\\'")+'\')">🔄 Find More</button></div>';
+cached.forEach(function(d,i){
+var exists=C.some(function(c){return c.ig.toLowerCase()===d.ig.toLowerCase()||c.name.toLowerCase()===d.name.toLowerCase()});
+dh+='<div style="background:rgba(167,139,250,.03);border:1px solid rgba(167,139,250,.12);border-radius:10px;padding:12px;margin-bottom:8px">';
+dh+='<div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px"><div style="flex:1"><b style="font-size:13px">'+d.name+'</b>';
+dh+=' <a href="https://www.instagram.com/'+d.ig+'/" target="_blank" style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);border-radius:5px;color:#fff;text-decoration:none;font-size:10px;font-weight:600;margin-left:6px">📸 @'+d.ig+'</a>';
+dh+='<div style="margin-top:4px;font-size:11px;color:#9494b0">'+d.fo+' followers · '+(d.of||"Unknown offer")+'</div>';
+if(d.about)dh+='<div style="margin-top:4px;font-size:11px;color:#5c5c78">Posts about: '+d.about+'</div>';
+dh+='</div><div style="display:flex;gap:6px;flex-shrink:0">';
+if(d.sc)dh+='<div class="sc-ring" style="width:32px;height:32px;font-size:11px">'+d.sc+'</div>';
+dh+='</div></div>';
+dh+='<div style="margin-top:6px;font-size:11px;color:#9494b0;line-height:1.5">💰 '+(d.op||"Potential webinar partner")+'</div>';
+dh+='<div style="margin-top:8px;display:flex;gap:6px">';
+if(exists){dh+='<span style="font-size:10px;color:#00e5a0;padding:4px 10px;border:1px solid rgba(0,229,160,.2);border-radius:5px">✓ Already in pipeline</span>';}
+else{dh+='<button class="btn bp" style="font-size:10px;padding:4px 12px" onclick="event.stopPropagation();addDiscovered('+i+',\''+st.scNi.replace(/'/g,"\\'")+'\')">+ Add to Pipeline</button>';}
+dh+='<a href="https://www.instagram.com/'+d.ig+'/" target="_blank" style="font-size:10px;padding:4px 12px;border:1px solid rgba(167,139,250,.2);border-radius:5px;color:#a78bfa;text-decoration:none">View Profile →</a>';
+dh+='</div></div>';});}
+if(cached==="error")dh+='<div style="padding:12px;background:rgba(244,100,100,.05);border:1px solid rgba(244,100,100,.12);border-radius:8px;color:#f46464;font-size:12px;margin-top:10px">Discovery failed. Make sure your API key is set and try again.</div>';
+// Articles
+dh+='<h4 style="font-size:11px;font-weight:700;margin:14px 0 6px">📰 Articles</h4>';
+if(ni.arts)ni.arts.forEach(function(a){dh+='<a class="art" href="'+a.u+'" target="_blank"><strong>'+a.t+'</strong><em>'+a.s+'</em></a>';});
+det.innerHTML=dh;r.appendChild(det);}}
+// Top creators paginated
+var sorted=C.slice().sort(function(a,b){return b.sc-a.sc});
+var perPage=6,pages=Math.ceil(sorted.length/perPage),page=Math.min(st.scPage,pages-1);
+var paged=sorted.slice(page*perPage,(page+1)*perPage);
+r.innerHTML+='<h3 style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#5c5c78;margin:8px 0 10px">🏆 All Creators Ranked (Page '+(page+1)+'/'+pages+')</h3>';
+var g=document.createElement("div");g.className="g2";
+paged.forEach(function(c){var cd=document.createElement("div");cd.className="cd sc-c";cd.style.cursor="pointer";
+cd.innerHTML='<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px"><div class="sc-ring">'+c.sc+'</div><div><b style="font-size:13px">'+c.name+'</b><br><small style="font-size:10px;color:#9494b0">@'+c.ig+' · '+c.fo+'</small></div></div><div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px"><span class="tag">'+c.ni+'</span><span class="sta" style="background:'+S[c.st].b+';color:'+S[c.st].c+';font-size:9px">'+S[c.st].l+'</span><span class="tag">'+c.of+'</span></div><div style="font-size:11px;line-height:1.5;color:#9494b0;padding-top:6px;border-top:1px solid rgba(255,255,255,.06)"><b style="color:#00e5a0;font-size:9px;text-transform:uppercase">Opportunity:</b><br>'+c.op+'</div>';
+cd.onclick=function(){showCreator(c)};g.appendChild(cd)});
+r.appendChild(g);
+// Pagination
+if(pages>1){var pn=document.createElement("div");pn.className="page-nav";
+for(var i=0;i<pages;i++){(function(pg){var b=document.createElement("button");b.className=pg===page?"on":"";b.textContent=pg+1;b.onclick=function(){st.scPage=pg;render()};pn.appendChild(b)})(i)}
+r.appendChild(pn);}
+return r;}
+
+// ═══════ HISTORY TAB ═══════
+function rHistory(){var r=document.createElement("div");
+// Gather all messages from all creators into one flat array
+var all=[];
+Object.keys(window._msgLog).forEach(function(cid){
+var cr=C.find(function(c){return c.id===parseInt(cid)});
+if(!cr)return;
+getMsgs(parseInt(cid)).forEach(function(m,i){
+all.push({cr:cr,msg:m,idx:i,cid:parseInt(cid)});});});
+// Sort by timestamp descending (newest first)
+all.sort(function(a,b){return(b.msg.ts||0)-(a.msg.ts||0)});
+var totalSent=all.length;
+var totalReplied=all.filter(function(a){return a.msg.replied}).length;
+var totalWaiting=all.filter(function(a){return !a.msg.replied}).length;
+var uniqueCreators=[];all.forEach(function(a){if(uniqueCreators.indexOf(a.cr.name)<0)uniqueCreators.push(a.cr.name)});
+
+r.innerHTML='<h2 style="font-family:Instrument Serif,serif;font-size:28px;font-weight:400;margin-bottom:4px">Message History</h2><p style="color:#9494b0;font-size:13px;margin-bottom:18px">Complete log of all outreach messages across every creator. Newest first.</p>';
+r.innerHTML+='<div class="g4" style="margin-bottom:16px"><div class="cd st-c"><div class="st-n">'+totalSent+'</div><div class="st-l">Total Sent</div></div><div class="cd st-c"><div class="st-n" style="color:#00e5a0">'+totalReplied+'</div><div class="st-l">Replied</div></div><div class="cd st-c"><div class="st-n" style="color:#f4a261">'+totalWaiting+'</div><div class="st-l">Waiting</div></div><div class="cd st-c"><div class="st-n">'+uniqueCreators.length+'</div><div class="st-l">Creators Contacted</div></div></div>';
+
+// Filter controls
+var filterDiv=document.createElement("div");filterDiv.style.cssText="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center";
+filterDiv.innerHTML='<span style="font-size:11px;color:#5c5c78">Filter:</span>';
+["All","Replied","Waiting","Cold DM","Follow-Up"].forEach(function(f){
+var fb=document.createElement("button");
+fb.style.cssText="padding:5px 12px;border:1px solid "+(st.histFilter===f||(!st.histFilter&&f==="All")?"#00e5a0":"rgba(255,255,255,.06)")+";background:"+(st.histFilter===f||(!st.histFilter&&f==="All")?"rgba(0,229,160,.1)":"transparent")+";color:"+(st.histFilter===f||(!st.histFilter&&f==="All")?"#00e5a0":"#9494b0")+";border-radius:6px;font-size:11px;font-family:Outfit,sans-serif;cursor:pointer";
+fb.textContent=f;fb.onclick=function(){st.histFilter=f==="All"?null:f;render()};filterDiv.appendChild(fb)});
+r.appendChild(filterDiv);
+
+// Apply filters
+var filtered=all;
+if(st.histFilter==="Replied")filtered=all.filter(function(a){return a.msg.replied});
+else if(st.histFilter==="Waiting")filtered=all.filter(function(a){return !a.msg.replied});
+else if(st.histFilter==="Cold DM")filtered=all.filter(function(a){return a.msg.type==="Cold DM"});
+else if(st.histFilter==="Follow-Up")filtered=all.filter(function(a){return a.msg.type.indexOf("Follow")>=0});
+
+if(!filtered.length){
+r.innerHTML+='<div class="cd" style="text-align:center;padding:40px"><p style="font-size:14px;color:#5c5c78;margin-bottom:8px">'+(all.length?'No messages match this filter.':'No messages logged yet.')+'</p><p style="font-size:12px;color:#5c5c78">'+(all.length?'Try a different filter above.':'Go to the Pipeline tab, click a creator card, and log your first message.')+'</p></div>';
+return r;}
+
+// Message feed
+var feed=document.createElement("div");feed.style.cssText="display:flex;flex-direction:column;gap:8px";
+filtered.forEach(function(a){
+var s=S[a.cr.st]||S.new;
+var card=document.createElement("div");card.className="cd";card.style.cssText="cursor:pointer;border-color:"+(a.msg.replied?"rgba(0,229,160,.12)":"rgba(255,255,255,.06)");
+var typeColor=a.msg.type==="Cold DM"?"#00b4d8":a.msg.type.indexOf("Follow")>=0?"#a78bfa":a.msg.type==="Voice Note"?"#f4a261":"#9494b0";
+var ch='<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px">';
+ch+='<div style="display:flex;align-items:center;gap:8px"><div class="av" style="width:28px;height:28px;font-size:10px">'+a.cr.name.charAt(0)+'</div><div><b style="font-size:12px">'+a.cr.name+'</b><br><span style="font-size:10px;color:#9494b0">@'+a.cr.ig+' · '+a.cr.ni+'</span></div></div>';
+ch+='<div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap"><span style="font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(0,0,0,.2);color:'+typeColor+'">'+a.msg.type+'</span>';
+ch+='<span style="font-size:10px;color:#5c5c78">'+a.msg.date+'</span>';
+if(a.msg.replied)ch+='<span style="font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(0,229,160,.1);color:#00e5a0">✓ Replied</span>';
+else ch+='<span style="font-size:10px;padding:2px 8px;border-radius:4px;background:rgba(244,162,97,.1);color:#f4a261">Waiting</span>';
+ch+='</div></div>';
+ch+='<div style="font-size:12px;color:#9494b0;line-height:1.6;white-space:pre-wrap;max-height:80px;overflow:hidden;text-overflow:ellipsis">'+a.msg.text.substring(0,200).replace(/</g,"&lt;")+(a.msg.text.length>200?"...":"")+'</div>';
+ch+='<div style="display:flex;gap:6px;margin-top:8px"><button class="btn '+(a.msg.replied?'bp':'bs')+'" style="font-size:10px;padding:4px 10px" onclick="event.stopPropagation();toggleReply('+a.cid+','+a.idx+')">'+(a.msg.replied?'✓ Replied':'Mark Replied')+'</button>';
+ch+='<button class="btn bs" style="font-size:10px;padding:4px 10px" onclick="event.stopPropagation();showPipelineDetail(C.find(function(x){return x.id==='+a.cid+'}))">View All Messages</button></div>';
+card.innerHTML=ch;
+card.onclick=function(){showPipelineDetail(a.cr)};
+feed.appendChild(card)});
+r.appendChild(feed);
+
+// Export button
+var exp=document.createElement("div");exp.style.cssText="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.06);display:flex;gap:8px;flex-wrap:wrap";
+exp.innerHTML='<button class="btn bs" onclick="exportHistory()">📥 Export History as CSV</button><button class="btn bs" style="background:rgba(244,100,100,.1);border-color:rgba(244,100,100,.2);color:#f46464" onclick="if(confirm(\'Clear ALL message history? This cannot be undone.\')){window._msgLog={};saveMsgLog({});render()}">🗑 Clear All History</button>';
+r.appendChild(exp);
+return r;}
+
+function exportHistory(){
+var rows=[["Creator","Handle","Niche","Message Type","Date","Replied","Message Text"]];
+Object.keys(window._msgLog).forEach(function(cid){
+var cr=C.find(function(c){return c.id===parseInt(cid)});
+if(!cr)return;
+getMsgs(parseInt(cid)).forEach(function(m){
+rows.push([cr.name,"@"+cr.ig,cr.ni,m.type,m.date,m.replied?"Yes":"No",'"'+(m.text||"").replace(/"/g,'""')+'"']);});});
+var csv=rows.map(function(r){return r.join(",")}).join("\n");
+var blob=new Blob([csv],{type:"text/csv"});
+var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="creator_scout_history_"+new Date().toISOString().split("T")[0]+".csv";a.click();}
+
+// ═══════ AI DM GENERATION ═══════
+window._dmCache={};
+function generatePersonalizedDMs(){
+var cr=C[st.sel];if(!cr)return;
+var apiKey=localStorage.getItem("cs_api_key");
+if(!apiKey){alert("Enter your API key in the AI chat first (click the 🤖 button)");return}
+var btn=document.getElementById("genDmBtn");
+if(btn){btn.textContent="⏳ Generating...";btn.disabled=true;}
+var tabType=st.dt;
+var segs=getAudienceSegments(cr);
+var bestBuyer=segs.find(function(s){return s.best})||segs[0];
+var typeLabel=tabType==="cold_dm"?"cold DMs":tabType==="follow_ups"?"follow-up messages":tabType==="voice_notes"?"voice note scripts":"objection responses";
+var prompt="You are writing Instagram "+typeLabel+" on behalf of Marc-Anthony Marcelin from Scaling Webinars. These messages must be HIGHLY PERSONALIZED to this specific creator.\n\n";
+prompt+="CREATOR PROFILE:\n- Name: "+cr.name+"\n- Instagram: @"+cr.ig+"\n- Niche: "+cr.ni+"\n- Followers: "+cr.fo+"\n- Current offer: "+cr.of+"\n- Opportunity: "+cr.op+"\n";
+if(cr.detail)prompt+="- Analysis: "+cr.detail+"\n";
+if(cr.next)prompt+="- Recommended next steps: "+cr.next+"\n";
+prompt+="\nBEST BUYER in their audience: "+bestBuyer.name+" — Pain: "+bestBuyer.pain+" | Desire: "+bestBuyer.desire+"\n";
+prompt+="\nSCALING WEBINARS RESULTS: $10M+ generated, one client $996K in 200 days, another $300K/mo working 10 hrs/week, 200 calls from one webinar.\n";
+prompt+="\nTONE: Professional but warm. Confident, not arrogant. Like a successful peer giving real advice. Use proper sentences but keep it conversational. No agency buzzwords. Reference SPECIFIC things about this creator — their content topics, their audience type, their current offer gaps. Each message should feel like Marc personally studied their page.\n";
+
+if(tabType==="cold_dm"){
+prompt+="\nGenerate exactly 4 cold DMs with different strategic approaches:\n1. 'The Observation' — Lead with something specific you noticed about their content or brand\n2. 'The Insight' — Share a specific data point or opportunity about their niche\n3. 'The Proof Drop' — Lead with a result from a similar creator\n4. 'The Value Offer' — Offer to send them something valuable (Loom, breakdown, audit)\n\nEach DM should be under 120 words. Hook must work in the IG DM preview (first line they see).";
+}else if(tabType==="follow_ups"){
+prompt+="\nGenerate exactly 4 follow-up messages for different time intervals:\n1. 'Day 3 — Light bump' — Casual, acknowledge busy inbox\n2. 'Day 7 — New value' — Share fresh insight about their niche\n3. 'Day 14 — Honest close' — Respectful last attempt with conviction\n4. 'Day 30 — Case study' — Share a recent result that's relevant to them\n\nEach should be under 100 words.";
+}else if(tabType==="voice_notes"){
+prompt+="\nGenerate exactly 2 voice note scripts:\n1. '60-Second Script' — Full pitch, natural and conversational\n2. '30-Second Script' — Quick, direct, gets to the point\n\nInclude delivery tips. These should sound like Marc talking naturally, not reading.";
+}else if(tabType==="objections"){
+prompt+="\nGenerate exactly 4 objection responses specific to this creator:\n1. When they say 'not interested'\n2. When they say 'I have a team already'\n3. When they ask about pricing\n4. When they say 'send me info'\n\nEach response should be personalized to "+cr.name+"'s specific situation and include a strategic tip.";
+}
+
+prompt+="\n\nRespond in ONLY this JSON format (no markdown, no backticks, no explanation):\n[{\"a\":\"Angle name\",\"h\":\"The hook/first line\",\"b\":\"The full message body\"}]";
+
+fetch("https://api.anthropic.com/v1/messages",{
+method:"POST",
+headers:{"Content-Type":"application/json","x-api-key":apiKey,"anthropic-dangerous-direct-browser-access":"true"},
+body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:2000,messages:[{role:"user",content:prompt}]})
+}).then(function(r){return r.json()}).then(function(data){
+var text=data.content&&data.content[0]?data.content[0].text:"[]";
+try{
+var clean=text.replace(/```json|```/g,"").trim();
+var msgs=JSON.parse(clean);
+var cacheKey="dm_cache_"+cr.id+"_"+tabType;
+window._dmCache[cacheKey]=msgs;
+render();
+}catch(e){
+alert("AI response couldn't be parsed. Try again.");
+console.log("Parse error:",e,"Response:",text);
+}
+}).catch(function(e){
+alert("API call failed: "+e.message);
+}).finally(function(){
+if(btn){btn.textContent="✨ Generate Personalized";btn.disabled=false;}
+});
+}
+
+// ═══════ AI SCOUT DISCOVERY ENGINE ═══════
+window._scoutCache={};
+function discoverCreators(niche){
+var apiKey=localStorage.getItem("cs_api_key");
+if(!apiKey){alert("Enter your API key in the AI chat first (click the 🤖 button)");return}
+var ni=N.find(function(x){return x.name===niche});
+var existing=C.filter(function(c){return c.ni===niche}).map(function(c){return c.name.toLowerCase()});
+var existingStr=existing.join(", ")||"none yet";
+
+var prompt="You are a creator scout for Scaling Webinars, a webinar growth agency that builds webinar funnels for creators and coaches.\n\n";
+prompt+="YOUR JOB: Find as many REAL Instagram creators as you can in the "+niche+" niche who would be ideal partners for a webinar funnel.\n\n";
+prompt+="NICHE: "+niche+"\nMarket size: "+(ni?ni.rev:"growing")+"\nGrowth: "+(ni?ni.growth:"strong")+"\nKeywords: "+(ni?ni.kw.join(", "):niche)+"\n\n";
+prompt+="ALREADY IN OUR PIPELINE (do NOT include these): "+existingStr+"\n\n";
+prompt+="REQUIREMENTS FOR EACH CREATOR:\n";
+prompt+="- Must be a REAL person with a REAL Instagram account\n";
+prompt+="- Between 50K and 10M followers\n";
+prompt+="- Actively posts about "+niche.toLowerCase()+" topics\n";
+prompt+="- Either has no info product, has an undermonetized offer, or has an offer that could be significantly scaled with a webinar funnel\n";
+prompt+="- English-speaking audience\n\n";
+prompt+="GIVE ME AT LEAST 15 CREATORS. More is better. Think broadly across sub-niches within "+niche+":\n";
+if(ni)prompt+="Sub-topics to explore: "+ni.kw.join(", ")+"\n";
+prompt+="\nFor each creator include:\n- Their real full name\n- Their exact Instagram handle (no @ symbol)\n- Estimated follower count\n- What they specifically post about (be specific, not just the niche name)\n- Their current monetization (course, membership, coaching, none, etc.)\n- A scout score 1-100 based on how good a fit they are for a webinar partnership\n- Why specifically they'd be a great Scaling Webinars partner (what's the opportunity?)\n\n";
+prompt+="Respond in ONLY this JSON format. No markdown, no backticks, no explanation before or after:\n[{\"name\":\"Full Name\",\"ig\":\"instagramhandle\",\"fo\":\"500K\",\"ni\":\""+niche+"\",\"of\":\"Their offer or No offer\",\"sc\":80,\"op\":\"Specific opportunity — what we'd build and why\",\"about\":\"What they specifically post about\"}]";
+
+window._scoutCache[niche]="loading";
+render();
+
+fetch("https://api.anthropic.com/v1/messages",{
+method:"POST",
+headers:{"Content-Type":"application/json","x-api-key":apiKey,"anthropic-dangerous-direct-browser-access":"true"},
+body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:4000,messages:[{role:"user",content:prompt}]})
+}).then(function(r){return r.json()}).then(function(data){
+var text=data.content&&data.content[0]?data.content[0].text:"[]";
+try{
+var clean=text.replace(/```json|```/g,"").trim();
+var creators=JSON.parse(clean);
+// Filter out any that are already in our pipeline
+creators=creators.filter(function(d){return !existing.includes(d.name.toLowerCase())&&!existing.includes(d.ig.toLowerCase())});
+window._scoutCache[niche]=creators;
+render();
+}catch(e){
+window._scoutCache[niche]="error";
+render();
+console.log("Parse error:",e,"Response:",text);
+}
+}).catch(function(e){
+window._scoutCache[niche]="error";
+render();
+});
+}
+
+// ═══════ RENDER ═══════
+function render(){
+var nav=document.getElementById("nav");nav.innerHTML="";
+[{k:"market",l:"📊 Market Intel"},{k:"outreach",l:"🎯 IG Outreach"},{k:"pipeline",l:"📋 Pipeline"},{k:"history",l:"📜 History"},{k:"scout",l:"🔍 Scouting"}].forEach(function(t){
+var b=document.createElement("button");b.className=st.tab===t.k?"on":"";b.textContent=t.l;b.onclick=function(){st.tab=t.k;render()};nav.appendChild(b)});
+var app=document.getElementById("app");app.innerHTML="";
+if(st.tab==="market")app.appendChild(rMkt());
+else if(st.tab==="outreach"){app.appendChild(rOut());setTimeout(setupCSVHandler,50);}
+else if(st.tab==="pipeline")app.appendChild(rPipe());
+else if(st.tab==="history")app.appendChild(rHistory());
+else app.appendChild(rScout());}
+render();
+
+// ═══════ AI CHAT AGENT ═══════
+(function(){
+var chatOpen=false,apiKey=localStorage.getItem("cs_api_key")||"",chatHistory=[];
+// Build UI
+var fab=document.createElement("button");fab.id="ai-fab";fab.textContent="🤖";fab.title="AI Outreach Assistant";document.body.appendChild(fab);
+
+var chat=document.createElement("div");chat.id="ai-chat";
+chat.innerHTML='<div id="ai-chat-head"><h3><span></span> Scout AI — Scaling Webinars</h3><button style="background:0;border:0;color:#9494b0;font-size:14px;cursor:pointer" onclick="document.getElementById(\'ai-chat\').classList.remove(\'open\');document.getElementById(\'ai-fab\').classList.remove(\'open\')">✕</button></div><div id="ai-ctx"></div><div id="ai-msgs"></div><div id="ai-input-wrap"><textarea id="ai-input" rows="1" placeholder="Ask me to refine a message, draft outreach, analyze a creator..."></textarea><button id="ai-send">→</button></div>';
+document.body.appendChild(chat);
+
+fab.onclick=function(){
+chatOpen=!chatOpen;
+chat.classList.toggle("open",chatOpen);
+fab.classList.toggle("open",chatOpen);
+fab.textContent=chatOpen?"✕":"🤖";
+if(chatOpen&&!apiKey)promptKey();
+if(chatOpen)updateContext();
+};
+
+function promptKey(){
+var msgs=document.getElementById("ai-msgs");
+msgs.innerHTML='<div class="ai-msg bot"><b>Welcome to Scout AI!</b><br><br>I need your Anthropic API key to power real-time responses. Your key stays in your browser only — never sent anywhere except Anthropic\'s API.<br><br><input id="ai-key-input" style="width:100%;padding:8px 10px;background:#08080d;border:1px solid rgba(255,255,255,.12);border-radius:6px;color:#f2f2fa;font-family:Outfit,sans-serif;font-size:12px;margin-top:8px;outline:none" placeholder="sk-ant-..."><br><button onclick="saveKey()" style="margin-top:8px;padding:8px 16px;background:#00e5a0;color:#08080d;border:none;border-radius:6px;font-family:Outfit,sans-serif;font-size:12px;font-weight:600;cursor:pointer">Save Key</button></div>';
+}
+
+window.saveKey=function(){
+var v=document.getElementById("ai-key-input");
+if(v&&v.value.trim()){apiKey=v.value.trim();localStorage.setItem("cs_api_key",apiKey);
+var msgs=document.getElementById("ai-msgs");
+msgs.innerHTML='<div class="ai-msg bot"><b>Key saved!</b> I\'m Scout AI — your outreach strategist for Scaling Webinars. I write DMs in Marc-Anthony\'s voice and know the full Scaling Webinars system.<br><br>Try asking me:<br>• "Write a DM for a health creator with 500K followers and no offer"<br>• "Make this hook more like how Marc would say it"<br>• "What webinar offer should I pitch to a trading creator?"<br>• "Rewrite this follow-up — it sounds too salesy"<br>• "Draft a voice note script for this creator"</div>';
+chatHistory=[{role:"assistant",content:"Key saved. Ready to help with creator outreach, DM crafting, and niche analysis."}];}};
+
+function updateContext(){
+var ctx=document.getElementById("ai-ctx");
+if(st.tab==="outreach"&&C[st.sel]){
+var cr=C[st.sel];ctx.style.display="block";
+ctx.textContent="📍 Context: "+cr.name+" (@"+cr.ig+") · "+cr.ni+" · "+cr.fo+" · "+cr.of;
+}else if(st.tab==="market"){ctx.style.display="block";ctx.textContent="📍 Context: Market Intelligence — analyzing niches";}
+else if(st.tab==="scout"){ctx.style.display="block";ctx.textContent="📍 Context: Scouting — discovering new creators";}
+else if(st.tab==="history"){ctx.style.display="block";ctx.textContent="📍 Context: Message History — "+Object.keys(window._msgLog).reduce(function(a,k){return a+window._msgLog[k].length},0)+" messages logged";}
+else{ctx.style.display="block";ctx.textContent="📍 Context: Pipeline Tracker";}
+}
+
+function addMsg(role,text){
+var msgs=document.getElementById("ai-msgs");
+var d=document.createElement("div");d.className="ai-msg "+(role==="user"?"usr":"bot");
+d.innerHTML=text.replace(/\n/g,"<br>");msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;
+}
+
+function showTyping(){
+var msgs=document.getElementById("ai-msgs");
+var d=document.createElement("div");d.className="ai-typing";d.id="ai-typing";
+d.innerHTML="<span>●</span> <span>●</span> <span>●</span>";
+msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;
+}
+function hideTyping(){var t=document.getElementById("ai-typing");if(t)t.remove();}
+
+function getSystemPrompt(){
+var cr=st.tab==="outreach"&&C[st.sel]?C[st.sel]:null;
+var sys="You are Scout AI, the outreach strategist for Scaling Webinars (scalingwebinars.io) — the #1 full-stack webinar growth firm in the world. You write DMs on behalf of Marc-Anthony Marcelin, the founder.\n\nABOUT MARC & SCALING WEBINARS:\n- Marc-Anthony Marcelin, 23 years old, based in Tampa FL. Haitian-American entrepreneur.\n- Co-founders: Brian, Audi, and KJ\n- Generated over $10M+ in webinar revenue for clients\n- One client made $996K in 200 days. Another hit $300K/mo working 10 hours/week. Another booked 200 calls from a single webinar.\n- Built Scaling Webinars to 7 figures in first year of business\n- Instagram: @marcmarcelinn\n- Philosophy: Webinars are the only expert-led funnel AI cant replicate. They install goodwill into the market instead of extracting it. Build businesses backend-to-frontend.\n\nWHAT SCALING WEBINARS DOES (full done-for-you partnership):\n- Webinar funnel buildout (opt-in page, thank you page with VSSL, intake forms, confirmation sequences)\n- Offer creation and strategy (mid-ticket $597-$997 frontend, high-ticket $2,997-$5,000+ backend)\n- Paid media management (Meta ads — Facebook + Instagram, sub-$10 CPL target)\n- Sales team buildout (closers, setters, pre-call systems)\n- Email/SMS marketing (indoctrination sequences, engagement bait, RVMs)\n- Full brand management\n- Post-webinar systems: segmentation by watch time, retargeting ads, setter teams\n\nTHE SCALING WEBINARS SYSTEM:\n- Traffic: Meta ads at sub-$10 CPL\n- Registration: 2-step funnel (opt-in → thank you page with VSSL + intake form for pixel conditioning)\n- Webinar: Expert-led 60-90 min. Mid-ticket offer ($597-$997) on webinar covers ad spend. Introduction messaging and pitch are the two biggest levers.\n- Sales: Everyone goes to sales call for HT offers above $2,997. 20% book rate → 70% show → 35% close. Post-webinar segmentation + retargeting + setter teams.\n- Backend: Onboarding call upsells mid-ticket buyers to $4,500+ high-ticket. 85% show rate on onboarding calls, 30% conversion to HT.\n\nDM WRITING GUIDELINES:\n- TONE: Professional but warm. Confident but not arrogant. Think 'successful friend giving you real advice' — not corporate, not overly casual.\n- Lead with an observation about THEM first, not an introduction about yourself or the company.\n- Use proper sentences and grammar, but keep it conversational. Not formal, not sloppy.\n- Reference specific results naturally and matter-of-factly — '$996K in 200 days' as context, not as a flex.\n- Never use agency buzzwords: 'done-for-you partnership', 'full-stack', 'leverage', 'synergy', 'growth firm'\n- Never use overly casual language either: no 'lol' in cold DMs, no 'yo bro', no 'kinda crazy'\n- The voice is: articulate, specific, genuinely curious about their business, generous with insight, direct about results\n- Marc's real personality: he teaches freely, backs claims with numbers, respects people's time, and isn't afraid to tell you if something isn't a fit\n- Keep cold DMs under 120 words. They can ask for more.\n- Hooks should feel like a smart peer reaching out, not a stranger pitching.\n- Always end with a clear, low-pressure next step (15 min call, Loom video, etc.)\n- Midweek sends convert 25-35% better\n- Voice notes get 3x response vs text DMs\n\nCurrent niches tracked (with heat scores): "+N.map(function(n){return n.name+" ("+n.heat+")"}).join(", ")+"\n\n";
+if(cr){sys+="CURRENTLY SELECTED CREATOR:\nName: "+cr.name+"\nIG: @"+cr.ig+"\nNiche: "+cr.ni+"\nFollowers: "+cr.fo+"\nCurrent Offer: "+cr.of+"\nScout Score: "+cr.sc+"\nOpportunity: "+cr.op+"\n";
+if(cr.detail)sys+="Analysis: "+cr.detail+"\n";
+if(cr.next)sys+="Next Steps: "+cr.next+"\n";
+// Add audience psychology context
+var segs=getAudienceSegments(cr);
+sys+="\nAUDIENCE PSYCHOLOGY for "+cr.name+"'s followers:\n";
+segs.forEach(function(s){sys+="- "+s.name+(s.best?" [BEST BUYER]":"")+": Pain: "+s.pain+" | Wants: "+s.desire+" | Buys: "+s.buys+"\n";});
+// Add moat context
+var moats=getCreatorMoat(cr);
+sys+="\nDEFENSIBLE EDGE for "+cr.name+":\n";
+moats.forEach(function(m){sys+="- "+m.type+": "+m.desc+"\n";});
+// Add niche reframes
+var reframes=getNicheReframes(cr.ni);
+if(reframes.length){sys+="\nNICHE-SPECIFIC OBJECTION REFRAMES for "+cr.ni+":\n";
+reframes.forEach(function(rf){sys+="- Myth: "+rf.myth+" → Reframe: "+rf.flip+"\n";});}
+sys+="\nWhen writing DMs or strategizing, reference the audience psychology — speak to the Best Buyer segment's specific pain and desire. When pitching the creator, reference their defensible edge to show you understand what makes them special. When handling objections, use the niche-specific reframes.\n";}
+sys+="\nHelp the user craft, refine, and improve outreach messages. Be specific, actionable, and creative. When writing DMs, format them ready to copy-paste. Keep responses concise — the user is busy doing outreach.";
+return sys;
+}
+
+async function sendToAI(userMsg){
+if(!apiKey){promptKey();return;}
+chatHistory.push({role:"user",content:userMsg});
+addMsg("user",userMsg);showTyping();
+try{
+var res=await fetch("https://api.anthropic.com/v1/messages",{
+method:"POST",headers:{"Content-Type":"application/json","x-api-key":apiKey,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
+body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1024,system:getSystemPrompt(),messages:chatHistory.slice(-10)})
+});
+var data=await res.json();hideTyping();
+if(data.content&&data.content[0]){
+var reply=data.content[0].text;chatHistory.push({role:"assistant",content:reply});addMsg("bot",reply);
+}else if(data.error){
+addMsg("bot","<b>Error:</b> "+(data.error.message||"API error. Check your key."));
+}
+}catch(err){hideTyping();addMsg("bot","<b>Connection error.</b> Make sure you're online and your API key is valid.");}
+}
+
+document.getElementById("ai-send").onclick=function(){
+var input=document.getElementById("ai-input");var v=input.value.trim();
+if(v){sendToAI(v);input.value="";input.style.height="auto";}
+};
+document.getElementById("ai-input").onkeydown=function(e){
+if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();document.getElementById("ai-send").click();}
+};
+document.getElementById("ai-input").oninput=function(){this.style.height="auto";this.style.height=Math.min(this.scrollHeight,80)+"px";};
+
+// Global function so modals can trigger AI with context
+window.askAI=function(prompt){
+chatOpen=true;chat.classList.add("open");fab.classList.add("open");fab.textContent="✕";
+updateContext();
+if(apiKey){sendToAI(prompt);}else{promptKey();}
+};
+})();
+</script></body></html>
